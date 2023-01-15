@@ -8,7 +8,7 @@ import YouTubeIcon from '@mui/icons-material/YouTube'
 import MenuOutlinedIcon from '@mui/icons-material/MenuOutlined.js'
 import AvatarButtonPopover from '../AvatarButtonPopover.jsx'
 
-const StyledAuthAppBar = styled(MuiAppBar, {
+const StyledAppBar = styled(MuiAppBar, {
   shouldForwardProp: prop => prop !== 'open',
 })(({ theme, open }) => ({
   zIndex: theme.zIndex.drawer + 1,
@@ -30,7 +30,7 @@ export default function AppBar({ open, setOpen }) {
   }
 
   return (
-    <StyledAuthAppBar color="default" position="fixed" open={open}>
+    <StyledAppBar color="default" position="fixed" open={open}>
       <Toolbar>
         <IconButton
           edge="start"
@@ -60,6 +60,6 @@ export default function AppBar({ open, setOpen }) {
 
         <AvatarButtonPopover/>
       </Toolbar>
-    </StyledAuthAppBar>
+    </StyledAppBar>
   )
 }

@@ -4,22 +4,24 @@ import { Link as RouterLink, useNavigate } from 'react-router-dom'
 import Avatar from '@mui/material/Avatar'
 import Button from '@mui/material/Button'
 import TextField from '@mui/material/TextField'
-import Link from '@mui/material/Link'
 import Grid from '@mui/material/Grid'
+import Link from '@mui/material/Link'
 import Box from '@mui/material/Box'
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined'
 import Typography from '@mui/material/Typography'
 import AuthService from '../services/AuthService.js'
 import { setUser } from '../store/auth.js'
 
-export default function Login() {
+export default function Register() {
   const dispatch = useDispatch()
 
   const navigate = useNavigate()
 
   const [ form, setForm ] = useState({
+    name: '',
     email: '',
     password: '',
+    passwordConfirmation: '',
   })
 
   function onInput(event) {
@@ -35,7 +37,7 @@ export default function Login() {
     const authService = new AuthService()
 
     try {
-      const { accessToken } = await authService.login(form)
+      const { accessToken } = await authService.register(form)
 
       localStorage.setItem('accessToken', accessToken)
 
@@ -63,10 +65,22 @@ export default function Login() {
       </Avatar>
 
       <Typography component="h1" variant="h5">
-        Login
+        Register
       </Typography>
 
-      <Box component="form" id="login-form" sx={{ mt: 1 }} onSubmit={onSubmit}>
+      <Box component="form" id="register-form" sx={{ mt: 1 }} onSubmit={onSubmit}>
+        <TextField
+          id="name"
+          name="name"
+          label="Name"
+          required
+          fullWidth
+          autoFocus
+          margin="normal"
+          value={form.name}
+          onInput={onInput}
+        />
+
         <TextField
           id="email"
           name="email"
@@ -74,7 +88,6 @@ export default function Login() {
           label="Email"
           required
           fullWidth
-          autoFocus
           margin="normal"
           value={form.email}
           onInput={onInput}
@@ -92,20 +105,32 @@ export default function Login() {
           onInput={onInput}
         />
 
+        <TextField
+          id="password-confirmation"
+          name="passwordConfirmation"
+          type="password"
+          label="Password Confirmation"
+          margin="normal"
+          required
+          fullWidth
+          value={form.passwordConfirmation}
+          onInput={onInput}
+        />
+
         <Button
           type="submit"
-          htmlFor="login-form"
+          htmlFor="register-form"
           fullWidth
           variant="contained"
           sx={{ mt: 3, mb: 2 }}
         >
-          Login
+          Register
         </Button>
 
         <Grid container justifyContent="flex-end">
           <Grid item>
-            <Link component={RouterLink} to="/register" variant="body2">
-              Don't have an account? Register here
+            <Link component={RouterLink} to="/login" variant="body2">
+              Already have an account? Login here
             </Link>
           </Grid>
         </Grid>
