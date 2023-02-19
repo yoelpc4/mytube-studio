@@ -5,6 +5,7 @@ import CssBaseline from '@mui/material/CssBaseline'
 import Box from '@mui/material/Box'
 import AppBar from '../components/Auth/AppBar.jsx'
 import Drawer from '../components/Drawer.jsx'
+import DialogEditContent from '../components/DialogEditContent.jsx'
 
 export default function AuthLayout() {
   const user = useSelector(state => state.auth.user)
@@ -28,10 +29,6 @@ export default function AuthLayout() {
       <Box
         component="main"
         sx={{
-          backgroundColor: (theme) =>
-            theme.palette.mode === 'light'
-              ? theme.palette.grey[100]
-              : theme.palette.grey[900],
           flexGrow: 1,
           height: '100vh',
           overflow: 'auto',
@@ -39,6 +36,8 @@ export default function AuthLayout() {
         }}
       >
         <Outlet />
+
+        <DialogEditContent />
       </Box>
     </Box>
   )

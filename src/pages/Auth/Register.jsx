@@ -9,8 +9,11 @@ import Link from '@mui/material/Link'
 import Box from '@mui/material/Box'
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined'
 import Typography from '@mui/material/Typography'
-import AuthService from '../services/AuthService.js'
-import { setUser } from '../store/auth.js'
+import AuthService from '../../services/AuthService.js'
+import { setUser } from '../../store/auth.js'
+import { openAlert } from '../../store/alert.js'
+
+const authService = new AuthService()
 
 export default function Register() {
   const dispatch = useDispatch()
@@ -34,8 +37,6 @@ export default function Register() {
   async function onSubmit(event) {
     event.preventDefault()
 
-    const authService = new AuthService()
-
     try {
       const { accessToken } = await authService.register(form)
 
@@ -47,7 +48,14 @@ export default function Register() {
 
       navigate('/')
     } catch (error) {
-      console.log(error)
+      if (import.meta.env.MODE === 'development') {
+        console.log(error)
+      }
+
+      dispatch(openAlert({
+        type: 'error',
+        message: 'An error occurred while registering'
+      }))
     }
   }
 
@@ -60,7 +68,7 @@ export default function Register() {
         alignItems: 'center',
       }}
     >
-      <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
+      <Avatar sx={{ m: 1, bgcolor: 'primary.main' }}>
         <LockOutlinedIcon/>
       </Avatar>
 

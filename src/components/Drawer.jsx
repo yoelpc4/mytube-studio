@@ -1,6 +1,10 @@
 import List from '@mui/material/List'
 import { styled } from '@mui/material/styles'
 import MuiDrawer from '@mui/material/Drawer'
+import ListItem from '@mui/material/ListItem'
+import DashboardIcon from '@mui/icons-material/Dashboard'
+import VideoLibraryIcon from '@mui/icons-material/VideoLibrary'
+import DrawerListItemButton from './DrawerListItemButton.jsx'
 
 const StyledDrawer = styled(MuiDrawer, { shouldForwardProp: prop => prop !== 'open' })(
   ({ theme, open }) => ({
@@ -28,11 +32,28 @@ const StyledDrawer = styled(MuiDrawer, { shouldForwardProp: prop => prop !== 'op
   }),
 )
 
+const routes = [
+  {
+    to: '/',
+    text: 'Dashboard',
+    icon: DashboardIcon,
+  },
+  {
+    to: '/contents',
+    text: 'Contents',
+    icon: VideoLibraryIcon,
+  },
+]
+
 export default function Drawer({ open }) {
   return (
-    <StyledDrawer variant="permanent" open={open}>
+    <StyledDrawer variant="permanent" open={open} sx={{ pt: 8 }}>
       <List component="nav">
-
+        {routes.map((route, index) => (
+          <ListItem key={index} disablePadding sx={{ display: 'block' }}>
+            <DrawerListItemButton open={open} route={route} />
+          </ListItem>
+        ))}
       </List>
     </StyledDrawer>
   )

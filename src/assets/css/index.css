@@ -7,3 +7,5 @@
 /* dependencies */
 @import 'nprogress/nprogress.css';
 
+/* custom */
+@import './custom.css';

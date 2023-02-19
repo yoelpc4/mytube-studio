@@ -4,7 +4,7 @@ import Paper from '@mui/material/Paper'
 
 export default function Home() {
   return (
-    <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
+    <Container maxWidth="lg" sx={{ m: 2 }}>
       <Grid container spacing={3}>
         {/* Chart */}
         <Grid item xs={12} md={8} lg={9}>
