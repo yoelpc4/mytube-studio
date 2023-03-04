@@ -11,7 +11,7 @@ import DialogDeleteContent from './DialogDeleteContent.jsx'
 import { openEditContentDialog } from '../store/editContent.js'
 import useGetContents from '../hooks/useGetContents.jsx'
 import useDeleteContent from '../hooks/useDeleteContent.jsx'
-import { STATUS_DRAFT, STATUS_PUBLISHED } from '../constants.ts'
+import { STATUS_DRAFT, STATUS_PUBLISHED } from '../constants.js'
 
 export default function DataTableContents() {
   const dispatch = useDispatch()

@@ -4,27 +4,26 @@ import { Link as RouterLink, useNavigate } from 'react-router-dom'
 import Avatar from '@mui/material/Avatar'
 import Button from '@mui/material/Button'
 import TextField from '@mui/material/TextField'
-import Grid from '@mui/material/Grid'
 import Link from '@mui/material/Link'
+import Grid from '@mui/material/Grid'
 import Box from '@mui/material/Box'
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined'
 import Typography from '@mui/material/Typography'
-import AuthService from '../../services/AuthService.js'
-import { setUser } from '../../store/auth.js'
-import { openAlert } from '../../store/alert.js'
+import AuthService from '../services/AuthService.js'
+import { setUser } from '../store/auth.js'
+import { openAlert } from '../store/alert.js'
+import {KEY_ACCESS_TOKEN} from '../constants.js';
 
 const authService = new AuthService()
 
-export default function Register() {
+export default function Login() {
   const dispatch = useDispatch()
 
   const navigate = useNavigate()
 
   const [ form, setForm ] = useState({
-    name: '',
     email: '',
     password: '',
-    passwordConfirmation: '',
   })
 
   function onInput(event) {
@@ -38,9 +37,9 @@ export default function Register() {
     event.preventDefault()
 
     try {
-      const { accessToken } = await authService.register(form)
+      const { accessToken } = await authService.login(form)
 
-      localStorage.setItem('accessToken', accessToken)
+      localStorage.setItem(KEY_ACCESS_TOKEN, accessToken)
 
       const user = await authService.getUser()
 
@@ -54,7 +53,7 @@ export default function Register() {
 
       dispatch(openAlert({
         type: 'error',
-        message: 'An error occurred while registering'
+        message: 'An error occurred while logging in'
       }))
     }
   }
@@ -73,22 +72,10 @@ export default function Register() {
       </Avatar>
 
       <Typography component="h1" variant="h5">
-        Register
+        Login
       </Typography>
 
-      <Box component="form" id="register-form" sx={{ mt: 1 }} onSubmit={onSubmit}>
-        <TextField
-          id="name"
-          name="name"
-          label="Name"
-          required
-          fullWidth
-          autoFocus
-          margin="normal"
-          value={form.name}
-          onInput={onInput}
-        />
-
+      <Box component="form" id="login-form" sx={{ mt: 1 }} onSubmit={onSubmit}>
         <TextField
           id="email"
           name="email"
@@ -96,6 +83,7 @@ export default function Register() {
           label="Email"
           required
           fullWidth
+          autoFocus
           margin="normal"
           value={form.email}
           onInput={onInput}
@@ -113,32 +101,20 @@ export default function Register() {
           onInput={onInput}
         />
 
-        <TextField
-          id="password-confirmation"
-          name="passwordConfirmation"
-          type="password"
-          label="Password Confirmation"
-          margin="normal"
-          required
-          fullWidth
-          value={form.passwordConfirmation}
-          onInput={onInput}
-        />
-
         <Button
           type="submit"
-          htmlFor="register-form"
+          htmlFor="login-form"
           fullWidth
           variant="contained"
           sx={{ mt: 3, mb: 2 }}
         >
-          Register
+          Login
         </Button>
 
         <Grid container justifyContent="flex-end">
           <Grid item>
-            <Link component={RouterLink} to="/login" variant="body2">
-              Already have an account? Login here
+            <Link component={RouterLink} to="/register" variant="body2">
+              Don't have an account? Register here
             </Link>
           </Grid>
         </Grid>

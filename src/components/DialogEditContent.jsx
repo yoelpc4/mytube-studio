@@ -18,7 +18,7 @@ import { closeEditContentDialog, setUpdatedContent } from '../store/editContent.
 import { openAlert } from '../store/alert.js'
 import ContentService from '../services/ContentService.js'
 import ImageField from './ImageField.jsx'
-import { STATUS_DRAFT, STATUS_PUBLISHED } from '../constants.ts'
+import { STATUS_DRAFT, STATUS_PUBLISHED } from '../constants.js'
 
 const contentService = new ContentService()
 
