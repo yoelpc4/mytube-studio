@@ -48,7 +48,7 @@ export default function Register() {
 
       navigate('/')
     } catch (error) {
-      if (import.meta.env.MODE === 'development') {
+      if (import.meta.env.DEV) {
         console.log(error)
       }
 

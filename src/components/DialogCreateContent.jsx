@@ -54,13 +54,18 @@ export default function DialogCreateContent() {
 
       dispatch(setCreatedContent(content))
 
+      dispatch(openAlert({
+        type: 'success',
+        message: 'Content created successfully'
+      }))
+
       setTimeout(() => {
         dispatch(openEditContentDialog(content))
 
         onCloseDialog()
       }, 0)
     } catch (error) {
-      if (import.meta.env.MODE === 'development') {
+      if (import.meta.env.DEV) {
         console.log(error)
       }
 

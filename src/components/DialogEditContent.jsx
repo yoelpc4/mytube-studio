@@ -100,10 +100,15 @@ export default function DialogEditContent() {
 
       dispatch(setUpdatedContent(content))
 
+      dispatch(openAlert({
+        type: 'success',
+        message: 'Content updated successfully'
+      }))
+
       // close dialog after next tick
       setTimeout(() => dispatch(closeEditContentDialog()), 0)
     } catch (error) {
-      if (import.meta.env.MODE === 'development') {
+      if (import.meta.env.DEV) {
         console.log(error)
       }
 

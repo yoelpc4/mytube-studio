@@ -47,7 +47,7 @@ export default function Login() {
 
       navigate('/')
     } catch (error) {
-      if (import.meta.env.MODE === 'development') {
+      if (import.meta.env.DEV) {
         console.log(error)
       }
 

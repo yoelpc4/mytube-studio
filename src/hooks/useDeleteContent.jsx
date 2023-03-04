@@ -23,8 +23,13 @@ export default function useDeleteContent({ onReload }) {
       await contentService.deleteContent(contentToDelete.id)
 
       onReload()
+
+      dispatch(openAlert({
+        type: 'success',
+        message: 'Content deleted successfully'
+      }))
     } catch (error) {
-      if (import.meta.env.MODE === 'development') {
+      if (import.meta.env.DEV) {
         console.log(error)
       }
 
