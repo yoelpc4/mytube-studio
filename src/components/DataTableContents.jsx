@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { DataGrid, GridActionsCellItem } from '@mui/x-data-grid'
 import DeleteIcon from '@mui/icons-material/DeleteOutlined'
@@ -12,6 +12,7 @@ import { openEditContentDialog } from '../store/editContent.js'
 import useGetContents from '../hooks/useGetContents.jsx'
 import useDeleteContent from '../hooks/useDeleteContent.jsx'
 import { STATUS_DRAFT, STATUS_PUBLISHED } from '../constants.js'
+import { openAlert } from '../store/alert.js';
 
 export default function DataTableContents() {
   const dispatch = useDispatch()
@@ -39,7 +40,7 @@ export default function DataTableContents() {
     onOpenDeleteContentDialog,
     onDeleteContentConfirmed,
     onDeleteContentCancelled
-  } = useDeleteContent({ onReload })
+  } = useDeleteContent({onReload})
 
   const columns = [
     {
@@ -49,7 +50,7 @@ export default function DataTableContents() {
       sortable: false,
       hideable: false,
       width: 5,
-      valueGetter: ({ api, row }) => {
+      valueGetter: ({api, row}) => {
         const index = api.getRowIndexRelativeToVisibleRows(row.id)
 
         return typeof index === 'number' ? index + 1 : null
@@ -61,19 +62,19 @@ export default function DataTableContents() {
       filterable: false,
       hideable: false,
       width: 650,
-      renderCell: ({ row }) => (
-        <Box sx={{ display: 'flex', my: 2 }}>
+      renderCell: ({row}) => (
+        <Box sx={{display: 'flex', my: 2}}>
           <video
             title={row.title}
             poster={row.thumbnailUrl}
             width="120px"
-            style={{ opacity: row.status === STATUS_PUBLISHED ? 1 : .5 }}
+            style={{opacity: row.status === STATUS_PUBLISHED ? 1 : .5}}
           >
             <source src={row.videoUrl} type="video/mp4"/>
             Your browser does not support the video tag.
           </video>
 
-          <Box sx={{ ml: 2 }}>
+          <Box sx={{ml: 2}}>
             <Typography variant="body2">
               {row.title}
             </Typography>
@@ -90,11 +91,11 @@ export default function DataTableContents() {
       headerName: 'Status',
       filterable: false,
       width: 150,
-      renderCell: ({ value }) => {
+      renderCell: ({value}) => {
         if (value === STATUS_DRAFT) {
           return (
             <>
-              <InsertDriveFileIcon fontSize="small" sx={{ mr: '3px' }}/> {STATUS_DRAFT}
+              <InsertDriveFileIcon fontSize="small" sx={{mr: '3px'}}/> {STATUS_DRAFT}
             </>
           )
         }
@@ -102,7 +103,7 @@ export default function DataTableContents() {
         if (value === STATUS_PUBLISHED) {
           return (
             <>
-              <VisibilityIcon fontSize="small" sx={{ mr: '3px' }}/> {STATUS_PUBLISHED}
+              <VisibilityIcon fontSize="small" sx={{mr: '3px'}}/> {STATUS_PUBLISHED}
             </>
           )
         }
@@ -130,26 +131,29 @@ export default function DataTableContents() {
       sortable: false,
       hideable: false,
       width: 100,
-      getActions: ({ row }) => [
+      getActions: ({row}) => [
         <GridActionsCellItem icon={<EditIcon/>} onClick={() => onEditContent(row.id)} label="Edit"/>,
         <GridActionsCellItem icon={<DeleteIcon/>} onClick={() => onDeleteContent(row.id)} label="Delete"/>,
       ]
     },
   ]
 
-  const [rows, setRows] = useState([])
-
-  useEffect(() => {
-    setRows(data.map(content => ({
-      ...content,
-      createdAt: new Date(content.createdAt).toLocaleString(),
-      updatedAt: new Date(content.updatedAt).toLocaleString(),
-    })))
-  }, [data])
+  const rows = useMemo(() => data.map(content => ({
+    ...content,
+    createdAt: new Date(content.createdAt).toLocaleString(),
+    updatedAt: new Date(content.updatedAt).toLocaleString(),
+  })), [data])
 
   useEffect(() => {
     if (error) {
-      console.log(error)
+      if (import.meta.env.DEV) {
+        console.log(error)
+      }
+
+      dispatch(openAlert({
+        type: 'error',
+        message: 'An error occurred while fetching contents',
+      }))
     }
   }, [error])
 
@@ -178,7 +182,7 @@ export default function DataTableContents() {
   function onEditContent(id) {
     const content = data.find(content => content.id === id)
 
-    if(!content) {
+    if (!content) {
       return
     }
 
@@ -188,7 +192,7 @@ export default function DataTableContents() {
   function onDeleteContent(id) {
     const content = data.find(content => content.id === id)
 
-    if(!content) {
+    if (!content) {
       return
     }
 
@@ -196,7 +200,7 @@ export default function DataTableContents() {
   }
 
   return (
-    <Box sx={{ width: '100%', height: 600 }}>
+    <Box sx={{width: '100%', height: 600}}>
       <DataGrid
         loading={isLoading}
         columns={columns}

@@ -110,14 +110,6 @@ export default function Login() {
         >
           Login
         </Button>
-
-        <Grid container justifyContent="flex-end">
-          <Grid item>
-            <Link component={RouterLink} to="/register" variant="body2">
-              Don't have an account? Register here
-            </Link>
-          </Grid>
-        </Grid>
       </Box>
     </Box>
   )

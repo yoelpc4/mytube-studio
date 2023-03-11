@@ -22,15 +22,18 @@ export default function DrawerListItemButton({ open, route }) {
       selected={!!match}
       sx={{
         minHeight: 48,
+        flexDirection: open ? 'row' : 'column',
         justifyContent: open ? 'initial' : 'center',
+        alignItems: 'center',
         px: 2.5,
       }}
     >
       <ListItemIcon
         sx={{
           minWidth: 0,
-          mr: open ? 3 : 'auto',
+          mr: open ? 2 : 'auto',
           justifyContent: 'center',
+          alignItems: 'center',
         }}
       >
         <MenuIcon color={color} />
@@ -38,8 +41,12 @@ export default function DrawerListItemButton({ open, route }) {
 
       <ListItemText
         primary={route.text}
-        primaryTypographyProps={{ color }}
-        sx={{ opacity: open ? 1 : 0 }}
+        primaryTypographyProps={{
+          color,
+          sx: {
+            fontSize: open ? '1rem' : '.8rem'
+          },
+        }}
       />
     </ListItemButton>
   )
