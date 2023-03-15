@@ -193,12 +193,11 @@ export default function DialogEditContent() {
             <video
               title={content.title}
               controls
+              src={content.videoUrl}
               poster={content.thumbnailUrl}
               width="100%"
               style={{ borderRadius: '10px', marginTop: 45 }}
             >
-              <source src={content.videoUrl} type="video/mp4" />
-              Your browser does not support the video tag.
             </video>
 
             <Box sx={{ backgroundColor: '#F9F9F9', mt: 2, p: 2}}>

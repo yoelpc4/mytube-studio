@@ -66,12 +66,11 @@ export default function DataTableContents() {
         <Box sx={{display: 'flex', my: 2}}>
           <video
             title={row.title}
+            src={row.videoUrl}
             poster={row.thumbnailUrl}
             width="120px"
             style={{opacity: row.status === STATUS_PUBLISHED ? 1 : .5}}
           >
-            <source src={row.videoUrl} type="video/mp4"/>
-            Your browser does not support the video tag.
           </video>
 
           <Box sx={{ml: 2}}>
