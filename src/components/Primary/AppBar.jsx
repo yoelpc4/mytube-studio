@@ -51,7 +51,7 @@ export default function AppBar({ open, setOpen }) {
             variant="h5"
             color="none"
             noWrap
-            sx={{ fontWeight: 'bold' }}
+            sx={{ fontWeight: 600 }}
           >
             Studio
           </Typography>

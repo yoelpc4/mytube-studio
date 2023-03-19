@@ -11,7 +11,7 @@ export default function Secondary() {
 
       <AppBar />
 
-      <Container component="main" maxWidth="xs" sx={{ pt: 10 }}>
+      <Container component="main" maxWidth="xs" sx={{ pt: 12 }}>
         <Outlet />
       </Container>
     </Box>

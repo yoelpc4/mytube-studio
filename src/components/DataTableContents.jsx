@@ -62,28 +62,51 @@ export default function DataTableContents() {
       filterable: false,
       hideable: false,
       width: 650,
-      renderCell: ({row}) => (
-        <Box sx={{display: 'flex', my: 2}}>
-          <video
-            title={row.title}
-            src={row.videoUrl}
-            poster={row.thumbnailUrl}
-            width="120px"
-            style={{opacity: row.status === STATUS_PUBLISHED ? 1 : .5}}
-          >
-          </video>
+      renderCell: ({row}) => {
+        const description = row.description ? row.description.replaceAll("\n", '<br>') : ''
 
-          <Box sx={{ml: 2}}>
-            <Typography variant="body2">
-              {row.title}
-            </Typography>
+        return (
+          <Box sx={{display: 'flex', my: 2}}>
+            <video
+              title={row.title}
+              src={row.videoUrl}
+              poster={row.thumbnailUrl}
+              width="120px"
+              style={{opacity: row.status === STATUS_PUBLISHED ? 1 : .5}}
+            >
+            </video>
 
-            <Typography color="gray" variant="caption">
-              {row.description}
-            </Typography>
+            <Box sx={{ml: 2}}>
+              <Typography
+                variant="body2"
+                sx={{
+                  display: '-webkit-box',
+                  WebkitLineClamp: 2,
+                  WebkitBoxOrient: 'vertical',
+                  overflow: 'hidden',
+                  textOverflow: 'ellipsis',
+                }}
+              >
+                {row.title}
+              </Typography>
+
+              <Typography
+                color="gray"
+                variant="caption"
+                dangerouslySetInnerHTML={{ __html: description }}
+                sx={{
+                  display: '-webkit-box',
+                  WebkitLineClamp: 2,
+                  WebkitBoxOrient: 'vertical',
+                  overflow: 'hidden',
+                  textOverflow: 'ellipsis',
+                }}
+              >
+              </Typography>
+            </Box>
           </Box>
-        </Box>
-      ),
+        )
+      },
     },
     {
       field: 'status',
