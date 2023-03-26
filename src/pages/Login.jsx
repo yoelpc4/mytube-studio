@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { useDispatch } from 'react-redux'
-import { Link as RouterLink, useNavigate } from 'react-router-dom'
+import { useLocation, useNavigate } from 'react-router-dom'
 import Avatar from '@mui/material/Avatar'
 import Button from '@mui/material/Button'
 import TextField from '@mui/material/TextField'
@@ -10,7 +10,7 @@ import Typography from '@mui/material/Typography'
 import AuthService from '../services/AuthService.js'
 import { setUser } from '../store/auth.js'
 import { openAlert } from '../store/alert.js'
-import {KEY_ACCESS_TOKEN} from '../constants.js';
+import { KEY_ACCESS_TOKEN } from '../constants.js';
 
 const authService = new AuthService()
 
@@ -18,6 +18,8 @@ export default function Login() {
   const dispatch = useDispatch()
 
   const navigate = useNavigate()
+
+  const {state} = useLocation()
 
   const [ form, setForm ] = useState({
     email: '',
@@ -42,6 +44,12 @@ export default function Login() {
       const user = await authService.getUser()
 
       dispatch(setUser(user))
+
+      if (state.from) {
+        navigate(state.from)
+
+        return
+      }
 
       navigate('/')
     } catch (error) {
