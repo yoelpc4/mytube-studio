@@ -4,7 +4,7 @@ import DataTableContents from '../components/DataTableContents.jsx'
 
 export default function ChannelContents() {
   return (
-    <Grid container rowSpacing={5} maxWidth="xl" sx={{ my: 1, mx: 4 }}>
+    <Grid container spacing={2} maxWidth="xl">
       <Grid xs={12}>
         <Typography component="h2" variant="h5" sx={{ fontWeight: 500 }}>
           Channel Contents

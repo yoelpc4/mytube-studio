@@ -26,6 +26,7 @@ export default function DrawerListItemButton({ open, route }) {
         justifyContent: open ? 'initial' : 'center',
         alignItems: 'center',
         px: 2.5,
+        borderRadius: '0 10px 10px 0',
       }}
     >
       <ListItemIcon
