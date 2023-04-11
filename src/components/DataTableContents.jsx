@@ -167,16 +167,18 @@ export default function DataTableContents() {
   })), [data])
 
   useEffect(() => {
-    if (error) {
-      if (import.meta.env.DEV) {
-        console.log(error)
-      }
-
-      dispatch(openAlert({
-        type: 'error',
-        message: 'An error occurred while fetching contents',
-      }))
+    if (!error) {
+      return
     }
+
+    if (import.meta.env.DEV) {
+      console.log(error)
+    }
+
+    dispatch(openAlert({
+      type: 'error',
+      message: 'An error occurred while fetching contents',
+    }))
   }, [error])
 
   useEffect(() => {
