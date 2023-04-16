@@ -32,7 +32,7 @@ export default function AppBar({ open, setOpen }) {
   }
 
   return (
-    <StyledAppBar elevation="0" position="fixed" open={open}>
+    <StyledAppBar elevation={0} position="fixed" open={open}>
       <Toolbar>
         <IconButton
           edge="start"

@@ -6,7 +6,7 @@ import YouTubeIcon from '@mui/icons-material/YouTube'
 
 export default function AppBar() {
   return (
-    <MuiAppBar elevation="0" position="fixed" sx={{background: '#fff'}}>
+    <MuiAppBar elevation={0} position="fixed" sx={{background: '#fff'}}>
       <Toolbar>
         <Link
           to="/"
