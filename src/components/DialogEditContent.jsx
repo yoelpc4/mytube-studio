@@ -14,7 +14,12 @@ import Radio from '@mui/material/Radio'
 import LoadingButton from '@mui/lab/LoadingButton'
 import BootstrapDialog from './BootstrapDialog.jsx'
 import BootstrapDialogTitle from './BootstrapDialogTitle.jsx'
-import { closeEditContentDialog, setUpdatedContent } from '../store/editContent.js'
+import {
+  closeEditContentDialog,
+  selectContentToEdit,
+  selectIsEditContentDialogOpen,
+  setUpdatedContent
+} from '../store/editContent.js'
 import { openAlert } from '../store/alert.js'
 import ContentService from '../services/ContentService.js'
 import ImageField from './ImageField.jsx'
@@ -36,9 +41,9 @@ const statuses = [
 export default function DialogEditContent() {
   const dispatch = useDispatch()
 
-  const content = useSelector(state => state.editContent.contentToEdit)
+  const content = useSelector(selectContentToEdit)
 
-  const isDialogOpen = useSelector(state => state.editContent.isEditContentDialogOpen)
+  const isDialogOpen = useSelector(selectIsEditContentDialogOpen)
 
   const [form, setForm] = useState({
     title: '',
@@ -102,7 +107,7 @@ export default function DialogEditContent() {
 
       dispatch(openAlert({
         type: 'success',
-        message: 'Content updated successfully'
+        message: 'Content has been updated'
       }))
 
       // close dialog after next tick

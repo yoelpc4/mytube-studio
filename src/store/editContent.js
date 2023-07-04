@@ -28,4 +28,10 @@ const editContentSlice = createSlice({
 
 export const { openEditContentDialog, closeEditContentDialog, setUpdatedContent } = editContentSlice.actions
 
+export const selectIsEditContentDialogOpen = state => state.editContent.isEditContentDialogOpen
+
+export const selectUpdatedContent = state => state.editContent.updatedContent
+
+export const selectContentToEdit = state => state.editContent.contentToEdit
+
 export default editContentSlice.reducer

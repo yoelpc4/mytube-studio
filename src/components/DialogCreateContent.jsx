@@ -10,7 +10,12 @@ import BootstrapDialogTitle from './BootstrapDialogTitle.jsx'
 import BootstrapDialog from './BootstrapDialog.jsx'
 import ContentService from '../services/ContentService.js'
 import { openEditContentDialog } from '../store/editContent.js'
-import { closeCreateContentDialog, openCreateContentDialog, setCreatedContent } from '../store/createContent.js'
+import {
+  closeCreateContentDialog,
+  openCreateContentDialog,
+  selectIsCreateContentDialogOpen,
+  setCreatedContent
+} from '../store/createContent.js'
 import { openAlert } from '../store/alert.js'
 
 const contentService = new ContentService()
@@ -18,7 +23,7 @@ const contentService = new ContentService()
 export default function DialogCreateContent() {
   const dispatch = useDispatch()
 
-  const isDialogOpen = useSelector(state => state.createContent.isCreateContentDialogOpen)
+  const isDialogOpen = useSelector(selectIsCreateContentDialogOpen)
 
   const [ isLoading, setIsLoading ] = useState(false)
 
@@ -56,7 +61,7 @@ export default function DialogCreateContent() {
 
       dispatch(openAlert({
         type: 'success',
-        message: 'Content created successfully'
+        message: 'Content has been created'
       }))
 
       setTimeout(() => {

@@ -23,4 +23,8 @@ const createContentSlice = createSlice({
 
 export const { openCreateContentDialog, closeCreateContentDialog, setCreatedContent } = createContentSlice.actions
 
+export const selectIsCreateContentDialogOpen = state => state.createContent.isCreateContentDialogOpen
+
+export const selectCreatedContent = state => state.createContent.createdContent
+
 export default createContentSlice.reducer

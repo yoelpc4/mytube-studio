@@ -1,14 +1,20 @@
 import client from './client.js'
 
 export default class AuthService {
-  async register(payload) {
-    const { data } = await client.post('auth/register', payload)
+  async login(payload) {
+    const { data } = await client.post('auth/login', payload)
 
     return data
   }
 
-  async login(payload) {
-    const { data } = await client.post('auth/login', payload)
+  async updateProfile(payload) {
+    const { data } = await client.post('auth/update-profile', payload)
+
+    return data
+  }
+
+  async updatePassword(payload) {
+    const { data } = await client.post('auth/update-password', payload)
 
     return data
   }

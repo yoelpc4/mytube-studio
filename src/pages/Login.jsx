@@ -1,4 +1,3 @@
-import { useState } from 'react'
 import { useDispatch } from 'react-redux'
 import { useLocation, useNavigate } from 'react-router-dom'
 import Avatar from '@mui/material/Avatar'
@@ -7,6 +6,7 @@ import TextField from '@mui/material/TextField'
 import Box from '@mui/material/Box'
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined'
 import Typography from '@mui/material/Typography'
+import useForm from '../hooks/useForm.jsx';
 import AuthService from '../services/AuthService.js'
 import { setUser } from '../store/auth.js'
 import { openAlert } from '../store/alert.js'
@@ -21,17 +21,10 @@ export default function Login() {
 
   const {state} = useLocation()
 
-  const [ form, setForm ] = useState({
+  const {form, onInput} = useForm({
     username: '',
     password: '',
   })
-
-  function onInput(event) {
-    setForm({
-      ...form,
-      [event.target.name]: event.target.value,
-    })
-  }
 
   async function onSubmit(event) {
     event.preventDefault()
@@ -78,6 +71,7 @@ export default function Login() {
         <TextField
           id="username"
           name="username"
+          type="text"
           label="Username"
           required
           fullWidth
