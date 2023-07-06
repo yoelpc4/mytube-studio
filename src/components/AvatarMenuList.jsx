@@ -11,7 +11,7 @@ import { Divider } from '@mui/material';
 import ManageAccountsOutlinedIcon from '@mui/icons-material/ManageAccountsOutlined';
 import { unsetUser } from '../store/auth.js'
 
-export default function AvatarMenuList() {
+export default function AvatarMenuList({ onMenuClicked }) {
   const dispatch = useDispatch()
 
   const navigate = useNavigate()
@@ -22,6 +22,8 @@ export default function AvatarMenuList() {
     dispatch(unsetUser())
 
     navigate('/login')
+
+    onMenuClicked()
   }
 
   return (
@@ -29,7 +31,7 @@ export default function AvatarMenuList() {
       <nav>
         <List>
           <ListItem disablePadding>
-            <Link to="/account" style={{ textDecoration: 'none', color: 'inherit' }}>
+            <Link to="/account" style={{ textDecoration: 'none', color: 'inherit' }} onClick={onMenuClicked}>
               <ListItemButton>
                 <ListItemIcon>
                   <ManageAccountsOutlinedIcon/>

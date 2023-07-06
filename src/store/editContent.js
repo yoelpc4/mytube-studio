@@ -1,7 +1,9 @@
 import { createSlice } from '@reduxjs/toolkit'
 
+const name = 'editContent'
+
 const editContentSlice = createSlice({
-  name: 'editContent',
+  name,
   initialState: {
     contentToEdit: null,
     isEditContentDialogOpen: false,
@@ -28,10 +30,10 @@ const editContentSlice = createSlice({
 
 export const { openEditContentDialog, closeEditContentDialog, setUpdatedContent } = editContentSlice.actions
 
-export const selectIsEditContentDialogOpen = state => state.editContent.isEditContentDialogOpen
+export const selectIsEditContentDialogOpen = state => state[name].isEditContentDialogOpen
 
-export const selectUpdatedContent = state => state.editContent.updatedContent
+export const selectUpdatedContent = state => state[name].updatedContent
 
-export const selectContentToEdit = state => state.editContent.contentToEdit
+export const selectContentToEdit = state => state[name].contentToEdit
 
 export default editContentSlice.reducer

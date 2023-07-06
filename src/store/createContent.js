@@ -1,7 +1,9 @@
 import { createSlice } from '@reduxjs/toolkit'
 
+const name = 'createContent'
+
 const createContentSlice = createSlice({
-  name: 'createContent',
+  name,
   initialState: {
     isCreateContentDialogOpen: false,
     createdContent: null,
@@ -23,8 +25,8 @@ const createContentSlice = createSlice({
 
 export const { openCreateContentDialog, closeCreateContentDialog, setCreatedContent } = createContentSlice.actions
 
-export const selectIsCreateContentDialogOpen = state => state.createContent.isCreateContentDialogOpen
+export const selectIsCreateContentDialogOpen = state => state[name].isCreateContentDialogOpen
 
-export const selectCreatedContent = state => state.createContent.createdContent
+export const selectCreatedContent = state => state[name].createdContent
 
 export default createContentSlice.reducer

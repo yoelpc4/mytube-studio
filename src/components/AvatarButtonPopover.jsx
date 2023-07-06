@@ -36,7 +36,7 @@ export default function AvatarButtonPopover() {
         }}
         onClose={onClose}
       >
-        <AvatarMenuList />
+        <AvatarMenuList onMenuClicked={onClose} />
       </Popover>
     </>
   )
