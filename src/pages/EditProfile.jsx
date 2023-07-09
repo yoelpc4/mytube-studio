@@ -2,12 +2,13 @@ import { useDispatch, useSelector } from 'react-redux';
 import Grid from '@mui/material/Unstable_Grid2';
 import Typography from '@mui/material/Typography';
 import TextField from '@mui/material/TextField';
-import Button from '@mui/material/Button';
+import LoadingButton from '@mui/lab/LoadingButton';
 import Box from '@mui/material/Box';
 import useForm from '../hooks/useForm.jsx';
 import AuthService from '../services/AuthService.js'
 import { openAlert } from '../store/alert.js';
 import { selectUser, setUser } from '../store/auth.js';
+import { useState } from 'react';
 
 const authService = new AuthService()
 
@@ -16,34 +17,32 @@ export default function EditProfile() {
 
   const user = useSelector(selectUser)
 
-  const {form, onInput} = useForm({
-    username: user.username,
-    name: user.name,
-    email: user.email,
+  const {form, errors, isLoading, handleInput, handleSubmit} = useForm({
+    data: {
+      username: user.username,
+      name: user.name,
+      email: user.email,
+    },
+    handleSuccess,
+    handleError,
   })
 
-  async function onSubmit(event) {
-    event.preventDefault()
+  async function handleSuccess() {
+    const updatedUser = await authService.updateProfile(form)
 
-    try {
-      const updatedUser = await authService.updateProfile(form)
+    dispatch(setUser(updatedUser))
 
-      dispatch(setUser(updatedUser))
+    dispatch(openAlert({
+      type: 'success',
+      message: 'Profile has been updated'
+    }))
+  }
 
-      dispatch(openAlert({
-        type: 'success',
-        message: 'Profile has been updated'
-      }))
-    } catch (error) {
-      if (import.meta.env.DEV) {
-        console.log(error)
-      }
-
-      dispatch(openAlert({
-        type: 'error',
-        message: 'An error occurred while updating profile'
-      }))
-    }
+  function handleError() {
+    dispatch(openAlert({
+      type: 'error',
+      message: 'An error occurred while updating profile'
+    }))
   }
 
   return (
@@ -55,7 +54,7 @@ export default function EditProfile() {
       </Grid>
 
       <Grid xs={12} md={6}>
-        <Box component="form" id="edit-profile-form" sx={{ mt: 1 }} onSubmit={onSubmit}>
+        <Box component="form" id="edit-profile-form" sx={{ mt: 1 }} onSubmit={handleSubmit}>
           <TextField
             id="username"
             name="username"
@@ -66,7 +65,9 @@ export default function EditProfile() {
             autoFocus
             margin="normal"
             value={form.username}
-            onInput={onInput}
+            error={!!errors.username}
+            helperText={errors.username}
+            onInput={handleInput}
           />
 
           <TextField
@@ -78,7 +79,9 @@ export default function EditProfile() {
             required
             fullWidth
             value={form.name}
-            onInput={onInput}
+            error={!!errors.name}
+            helperText={errors.name}
+            onInput={handleInput}
           />
 
           <TextField
@@ -90,18 +93,22 @@ export default function EditProfile() {
             required
             fullWidth
             value={form.email}
-            onInput={onInput}
+            error={!!errors.email}
+            helperText={errors.email}
+            onInput={handleInput}
           />
 
           <Box sx={{ display: 'flex', justifyContent: 'flex-end' }}>
-            <Button
+            <LoadingButton
               type="submit"
-              htmlFor="edit-profile-form"
+              form="edit-profile-form"
               variant="contained"
+              loading={isLoading}
+              disabled={isLoading}
               sx={{ mt: 3, mb: 2 }}
             >
-              Update
-            </Button>
+              <span>Update</span>
+            </LoadingButton>
           </Box>
         </Box>
       </Grid>

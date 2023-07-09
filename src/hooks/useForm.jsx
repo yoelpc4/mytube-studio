@@ -1,26 +1,73 @@
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 
-export default function useForm(data) {
-  const [ form, setForm ] = useState(data)
+export default function useForm({data, handleSuccess, handleError, handleFinally = () => {}}) {
+  const initialData = useRef()
 
-  function onInput(event) {
+  const [form, setForm] = useState(data)
+
+  const [errors, setErrors] = useState({})
+
+  const [isLoading, setIsLoading] = useState(false)
+
+  initialData.current = data
+
+  function handleInput(event) {
     setForm({
       ...form,
       [event.target.name]: event.target.value,
     })
   }
 
-  function resetForm() {
-    setForm(Object.keys(form).reduce((newForm, key) => {
-      newForm[key] = ''
+  function handleReset() {
+    setForm(initialData.current)
+  }
 
-      return newForm
-    }, {}))
+  async function handleSubmit(event) {
+    event.preventDefault()
+
+    if (isLoading) {
+      return
+    }
+
+    setIsLoading(true)
+
+    setErrors({})
+
+    try {
+      await handleSuccess()
+    } catch (error) {
+      if (import.meta.env.DEV) {
+        console.log(error)
+      }
+
+      const response = error.response
+
+      if (response.status === 400) {
+        setErrors(response.data.errors.reduce((newErrors, { param, msg }) => {
+          newErrors[param] = msg
+
+          return newErrors
+        }, {}))
+
+        return
+      }
+
+      await handleError(response)
+    } finally {
+      setIsLoading(false)
+
+      handleFinally()
+    }
   }
 
   return {
     form,
-    onInput,
-    resetForm,
+    errors,
+    isLoading,
+    setForm,
+    setErrors,
+    handleInput,
+    handleReset,
+    handleSubmit,
   }
 }

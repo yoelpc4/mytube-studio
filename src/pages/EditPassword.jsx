@@ -2,7 +2,7 @@ import { useDispatch } from 'react-redux';
 import Grid from '@mui/material/Unstable_Grid2';
 import Typography from '@mui/material/Typography';
 import TextField from '@mui/material/TextField';
-import Button from '@mui/material/Button';
+import LoadingButton from '@mui/lab/LoadingButton';
 import Box from '@mui/material/Box';
 import useForm from '../hooks/useForm.jsx';
 import AuthService from '../services/AuthService.js'
@@ -13,34 +13,32 @@ const authService = new AuthService()
 export default function EditPassword() {
   const dispatch = useDispatch()
 
-  const {form, onInput, resetForm} = useForm({
-    currentPassword: '',
-    password: '',
-    passwordConfirmation: '',
+  const {form, errors, isLoading, handleInput, handleSubmit, handleReset} = useForm({
+    data: {
+      currentPassword: '',
+      password: '',
+      passwordConfirmation: '',
+    },
+    handleSuccess,
+    handleError,
   })
 
-  async function onSubmit(event) {
-    event.preventDefault()
+  async function handleSuccess() {
+    await authService.updatePassword(form)
 
-    try {
-      await authService.updatePassword(form)
+    handleReset()
 
-      resetForm()
+    dispatch(openAlert({
+      type: 'success',
+      message: 'Password has been updated'
+    }))
+  }
 
-      dispatch(openAlert({
-        type: 'success',
-        message: 'Password has been updated'
-      }))
-    } catch (error) {
-      if (import.meta.env.DEV) {
-        console.log(error)
-      }
-
-      dispatch(openAlert({
-        type: 'error',
-        message: 'An error occurred while updating password'
-      }))
-    }
+  function handleError() {
+    dispatch(openAlert({
+      type: 'error',
+      message: 'An error occurred while updating password'
+    }))
   }
 
   return (
@@ -52,7 +50,7 @@ export default function EditPassword() {
       </Grid>
 
       <Grid xs={12} md={6}>
-        <Box component="form" id="edit-password-form" sx={{ mt: 1 }} onSubmit={onSubmit}>
+        <Box component="form" id="edit-password-form" sx={{ mt: 1 }} onSubmit={handleSubmit}>
           <TextField
             id="currentPassword"
             name="currentPassword"
@@ -63,7 +61,9 @@ export default function EditPassword() {
             autoFocus
             margin="normal"
             value={form.currentPassword}
-            onInput={onInput}
+            error={!!errors.currentPassword}
+            helperText={errors.currentPassword}
+            onInput={handleInput}
           />
 
           <TextField
@@ -75,7 +75,9 @@ export default function EditPassword() {
             required
             fullWidth
             value={form.password}
-            onInput={onInput}
+            error={!!errors.password}
+            helperText={errors.password}
+            onInput={handleInput}
           />
 
           <TextField
@@ -87,18 +89,22 @@ export default function EditPassword() {
             required
             fullWidth
             value={form.passwordConfirmation}
-            onInput={onInput}
+            error={!!errors.passwordConfirmation}
+            helperText={errors.passwordConfirmation}
+            onInput={handleInput}
           />
 
           <Box sx={{ display: 'flex', justifyContent: 'flex-end' }}>
-            <Button
+            <LoadingButton
               type="submit"
-              htmlFor="edit-password-form"
+              form="edit-password-form"
               variant="contained"
+              loading={isLoading}
+              disabled={isLoading}
               sx={{ mt: 3, mb: 2 }}
             >
-              Update
-            </Button>
+              <span>Update</span>
+            </LoadingButton>
           </Box>
         </Box>
       </Grid>

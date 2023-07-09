@@ -3,19 +3,22 @@ import Box from '@mui/material/Box'
 import Button from '@mui/material/Button'
 import ImageIcon from '@mui/icons-material/Image'
 import Typography from '@mui/material/Typography'
+import { FormHelperText } from '@mui/material';
 
-export default function ImageField({ id, name, label, url, onImageChange }) {
+export default function ImageField({ id, name, label, url, onImageChange, error = false, helperText = '' }) {
   const [file, setFile] = useState(null)
 
   const [imageUrl, setImageUrl] = useState(url)
 
   useEffect(() => {
-    if (file) {
-      setImageUrl(URL.createObjectURL(file))
+    if (!file) {
+      return
     }
+
+    setImageUrl(URL.createObjectURL(file))
   }, [file])
 
-  function onChange(event) {
+  function handleChange(event) {
     const newFile = event.target.files[0]
 
     setFile(newFile)
@@ -24,7 +27,7 @@ export default function ImageField({ id, name, label, url, onImageChange }) {
   }
 
   return (
-    <Box sx={{ my: 2 }}>
+    <Box>
       <Typography component="label" variant="body2" sx={{ display: 'block', color: '#808080', mb: '3px' }}>
         {label}
       </Typography>
@@ -74,9 +77,13 @@ export default function ImageField({ id, name, label, url, onImageChange }) {
           name={name}
           accept="image/*"
           hidden
-          onChange={onChange}
+          onChange={handleChange}
         />
       </Button>
+
+      <FormHelperText error={error}>
+        {helperText}
+      </FormHelperText>
     </Box>
   )
 }
