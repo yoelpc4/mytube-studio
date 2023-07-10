@@ -39,13 +39,7 @@ export default function Login() {
 
     dispatch(setUser(user))
 
-    if (state.from) {
-      navigate(state.from)
-
-      return
-    }
-
-    navigate('/')
+    navigate(state.from ?? '/')
   }
 
   function handleError(response) {

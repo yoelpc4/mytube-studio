@@ -155,17 +155,16 @@ export default function DialogEditContent() {
                 onInput={handleInput}
               />
 
-              <Box sx={{my: 2}}>
-                <ImageField
-                  id="thumbnail"
-                  name="thumbnail"
-                  label="Thumbnail"
-                  url={content.thumbnailUrl}
-                  error={!!errors.thumbnail}
-                  helperText={errors.thumbnail}
-                  onImageChange={handleImageChange}
-                />
-              </Box>
+              <ImageField
+                id="thumbnail"
+                name="thumbnail"
+                label="Thumbnail"
+                url={content.thumbnailUrl}
+                error={!!errors.thumbnail}
+                helperText={errors.thumbnail}
+                sx={{my: 2}}
+                onImageChange={handleImageChange}
+              />
 
               <TextField
                 id="tags"
@@ -221,17 +220,16 @@ export default function DialogEditContent() {
               </Box>
             </Box>
 
-            <Box sx={{mt: 2}}>
-              <RadioField
-                label="Status"
-                name="status"
-                records={statuses}
-                value={form.status}
-                error={!!errors.status}
-                helperText={errors.status}
-                onChange={handleInput}
-              />
-            </Box>
+            <RadioField
+              label="Status"
+              name="status"
+              records={statuses}
+              value={form.status}
+              error={!!errors.status}
+              helperText={errors.status}
+              sx={{mt: 2}}
+              onChange={handleInput}
+            />
           </Grid>
         </Grid>
       </DialogContent>

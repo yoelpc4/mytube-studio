@@ -5,7 +5,7 @@ import ImageIcon from '@mui/icons-material/Image'
 import Typography from '@mui/material/Typography'
 import { FormHelperText } from '@mui/material';
 
-export default function ImageField({ id, name, label, url, onImageChange, error = false, helperText = '' }) {
+export default function ImageField({id, name, label, url, onImageChange, error = false, helperText = '', sx = {}}) {
   const [file, setFile] = useState(null)
 
   const [imageUrl, setImageUrl] = useState(url)
@@ -27,7 +27,7 @@ export default function ImageField({ id, name, label, url, onImageChange, error 
   }
 
   return (
-    <Box>
+    <Box sx={sx}>
       <Typography component="label" variant="body2" sx={{ display: 'block', color: '#808080', mb: '3px' }}>
         {label}
       </Typography>

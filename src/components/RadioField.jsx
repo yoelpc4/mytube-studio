@@ -5,16 +5,15 @@ import Radio from '@mui/material/Radio';
 import { FormHelperText } from '@mui/material';
 import FormControl from '@mui/material/FormControl';
 
-export default function RadioField({ label, name, value, records, onChange, error = false, helperText = '', ...props }) {
+export default function RadioField({label, name, value, records, onChange, error = false, helperText = '', sx = {}}) {
   return (
-    <FormControl>
+    <FormControl sx={sx}>
       <FormLabel>{label}</FormLabel>
 
       <RadioGroup
         name={name}
         value={value}
         onChange={onChange}
-        {...props}
       >
         {records.map(({label, value}) => (
           <FormControlLabel key={value} control={<Radio />} label={label} value={value} />
