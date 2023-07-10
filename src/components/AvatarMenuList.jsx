@@ -11,12 +11,12 @@ import { Divider } from '@mui/material';
 import ManageAccountsOutlinedIcon from '@mui/icons-material/ManageAccountsOutlined';
 import { unsetUser } from '../store/auth.js'
 
-export default function AvatarMenuList({ onMenuClicked }) {
+export default function AvatarMenuList({onMenuClicked}) {
   const dispatch = useDispatch()
 
   const navigate = useNavigate()
 
-  function onClickLogoutListItem() {
+  function handleClickLogoutListItem() {
     localStorage.removeItem('accessToken')
 
     dispatch(unsetUser())
@@ -31,7 +31,7 @@ export default function AvatarMenuList({ onMenuClicked }) {
       <nav>
         <List>
           <ListItem disablePadding>
-            <Link to="/account" style={{ textDecoration: 'none', color: 'inherit' }} onClick={onMenuClicked}>
+            <Link to="/account" style={{textDecoration: 'none', color: 'inherit'}} onClick={onMenuClicked}>
               <ListItemButton>
                 <ListItemIcon>
                   <ManageAccountsOutlinedIcon/>
@@ -44,7 +44,7 @@ export default function AvatarMenuList({ onMenuClicked }) {
 
           <Divider/>
 
-          <ListItem disablePadding onClick={onClickLogoutListItem}>
+          <ListItem disablePadding onClick={handleClickLogoutListItem}>
             <ListItemButton>
               <ListItemIcon>
                 <LogoutOutlinedIcon/>
