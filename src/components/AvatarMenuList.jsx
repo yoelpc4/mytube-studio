@@ -9,7 +9,7 @@ import ListItemText from '@mui/material/ListItemText'
 import LogoutOutlinedIcon from '@mui/icons-material/LogoutOutlined'
 import { Divider } from '@mui/material';
 import ManageAccountsOutlinedIcon from '@mui/icons-material/ManageAccountsOutlined';
-import { unsetUser } from '../store/auth.js'
+import { unsetUser } from '@/store/auth.js'
 
 export default function AvatarMenuList({onMenuClicked}) {
   const dispatch = useDispatch()

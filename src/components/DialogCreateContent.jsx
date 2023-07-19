@@ -8,15 +8,15 @@ import UploadIcon from '@mui/icons-material/Upload'
 import VideoCallOutlinedIcon from '@mui/icons-material/VideoCallOutlined'
 import BootstrapDialogTitle from './BootstrapDialogTitle.jsx'
 import BootstrapDialog from './BootstrapDialog.jsx'
-import ContentService from '../services/ContentService.js'
-import { openEditContentDialog } from '../store/editContent.js'
+import ContentService from '@/services/ContentService.js'
+import { openEditContentDialog } from '@/store/editContent.js'
 import {
   closeCreateContentDialog,
   openCreateContentDialog,
   selectIsCreateContentDialogOpen,
   setCreatedContent
-} from '../store/createContent.js'
-import { openAlert } from '../store/alert.js'
+} from '@/store/createContent.js'
+import { openAlert } from '@/store/alert.js'
 
 const contentService = new ContentService()
 

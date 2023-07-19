@@ -4,9 +4,9 @@ import Typography from '@mui/material/Typography';
 import TextField from '@mui/material/TextField';
 import LoadingButton from '@mui/lab/LoadingButton';
 import Box from '@mui/material/Box';
-import useForm from '../hooks/useForm.jsx';
-import AuthService from '../services/AuthService.js'
-import { openAlert } from '../store/alert.js';
+import useForm from '@/hooks/useForm.jsx';
+import AuthService from '@/services/AuthService.js'
+import { openAlert } from '@/store/alert.js';
 
 const authService = new AuthService()
 

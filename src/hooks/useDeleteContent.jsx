@@ -1,7 +1,7 @@
 import { useDispatch } from 'react-redux'
 import { useState } from 'react'
-import ContentService from '../services/ContentService.js'
-import { openAlert } from '../store/alert.js'
+import ContentService from '@/services/ContentService.js'
+import { openAlert } from '@/store/alert.js'
 
 const contentService = new ContentService()
 

@@ -6,8 +6,8 @@ import { styled } from '@mui/material/styles'
 import MuiAppBar from '@mui/material/AppBar'
 import YouTubeIcon from '@mui/icons-material/YouTube'
 import MenuOutlinedIcon from '@mui/icons-material/MenuOutlined.js'
-import AvatarButtonPopover from '../AvatarButtonPopover.jsx'
-import DialogCreateContent from '../DialogCreateContent.jsx'
+import AvatarButtonPopover from '@/components/AvatarButtonPopover.jsx'
+import DialogCreateContent from '@/components/DialogCreateContent.jsx'
 
 const StyledAppBar = styled(MuiAppBar, {
   shouldForwardProp: prop => prop !== 'open',

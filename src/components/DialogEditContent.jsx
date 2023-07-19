@@ -14,12 +14,12 @@ import {
   selectContentToEdit,
   selectIsEditContentDialogOpen,
   setUpdatedContent
-} from '../store/editContent.js'
-import { openAlert } from '../store/alert.js'
-import ContentService from '../services/ContentService.js'
+} from '@/store/editContent.js'
+import { openAlert } from '@/store/alert.js'
+import ContentService from '@/services/ContentService.js'
 import ImageField from './ImageField.jsx'
-import { STATUS_DRAFT, STATUS_PUBLISHED } from '../constants.js'
-import useForm from '../hooks/useForm.jsx';
+import { STATUS_DRAFT, STATUS_PUBLISHED } from '@/constants.js'
+import useForm from '@/hooks/useForm.jsx';
 import RadioField from './RadioField.jsx';
 
 const contentService = new ContentService()

@@ -1,6 +1,6 @@
 import Grid from '@mui/material/Unstable_Grid2'
 import Typography from '@mui/material/Typography'
-import DataTableContents from '../components/DataTableContents.jsx'
+import DataTableContents from '@/components/DataTableContents.jsx'
 
 export default function ChannelContents() {
   return (

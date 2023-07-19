@@ -8,12 +8,12 @@ import EditIcon from '@mui/icons-material/EditOutlined'
 import Box from '@mui/material/Box'
 import Typography from '@mui/material/Typography'
 import DialogDeleteContent from './DialogDeleteContent.jsx'
-import { openEditContentDialog, selectUpdatedContent } from '../store/editContent.js'
-import useGetContents from '../hooks/useGetContents.jsx'
-import useDeleteContent from '../hooks/useDeleteContent.jsx'
-import { STATUS_DRAFT, STATUS_PUBLISHED } from '../constants.js'
-import { openAlert } from '../store/alert.js';
-import { selectCreatedContent } from '../store/createContent.js';
+import { openEditContentDialog, selectUpdatedContent } from '@/store/editContent.js'
+import useGetContents from '@/hooks/useGetContents.jsx'
+import useDeleteContent from '@/hooks/useDeleteContent.jsx'
+import { STATUS_DRAFT, STATUS_PUBLISHED } from '@/constants.js'
+import { openAlert } from '@/store/alert.js';
+import { selectCreatedContent } from '@/store/createContent.js';
 
 export default function DataTableContents() {
   const dispatch = useDispatch()
