@@ -13,10 +13,6 @@ export default function AvatarButtonPopover() {
     setAnchorEl(event.currentTarget)
   }
 
-  function handleClose() {
-    setAnchorEl(null)
-  }
-
   return (
     <>
       <Button onClick={handleClick}>
@@ -34,9 +30,8 @@ export default function AvatarButtonPopover() {
           vertical: 'top',
           horizontal: 'right',
         }}
-        onClose={handleClose}
       >
-        <AvatarMenuList onMenuClicked={handleClose} />
+        <AvatarMenuList />
       </Popover>
     </>
   )
