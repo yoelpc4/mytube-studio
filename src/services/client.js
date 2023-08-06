@@ -1,8 +1,6 @@
 import axios from 'axios'
 import nprogress from 'nprogress'
-import store from '@/store'
 import CsrfService from '@/services/CsrfService.js';
-import { setToken } from '@/store/csrf.js';
 
 const client = axios.create({
   baseURL: import.meta.env.VITE_API_URL,
@@ -15,12 +13,6 @@ const client = axios.create({
 })
 
 const fulfillRequest = config => {
-  const {csrf} = store.getState()
-
-  if (!['get', 'head', 'options'].includes(config.method)) {
-    config.headers['x-csrf-token'] = csrf.token
-  }
-
   if (nprogress.isStarted()) {
     nprogress.inc()
   } else {
@@ -54,7 +46,7 @@ const rejectResponse = async error => {
 
     const { csrfToken } = await csrfService.getCsrfToken()
 
-    store.dispatch(setToken(csrfToken))
+    client.defaults.headers.common['x-csrf-token'] = config.headers['x-csrf-token'] = csrfToken
 
     return client(config)
   }
