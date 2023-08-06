@@ -19,7 +19,7 @@ export default function AvatarMenuList() {
     try {
       await authService.logout()
 
-      dispatch(unsetUser())
+      setTimeout(() => dispatch(unsetUser()), 1000)
 
       window.location.replace('http://mytube.test')
     } catch (error) {
@@ -35,7 +35,7 @@ export default function AvatarMenuList() {
       <nav>
         <List>
           <ListItem disablePadding>
-            <ListItemButton>
+            <ListItemButton onClick={handleClickLogoutListItem}>
               <ListItemIcon>
                 <LogoutOutlinedIcon/>
               </ListItemIcon>
