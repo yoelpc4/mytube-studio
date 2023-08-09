@@ -8,7 +8,6 @@ import UploadIcon from '@mui/icons-material/Upload'
 import VideoCallOutlinedIcon from '@mui/icons-material/VideoCallOutlined'
 import BootstrapDialogTitle from './BootstrapDialogTitle.jsx'
 import BootstrapDialog from './BootstrapDialog.jsx'
-import ContentService from '@/services/ContentService.js'
 import { openEditContentDialog } from '@/store/editContent.js'
 import {
   closeCreateContentDialog,
@@ -17,8 +16,7 @@ import {
   setCreatedContent
 } from '@/store/createContent.js'
 import { openAlert } from '@/store/alert.js'
-
-const contentService = new ContentService()
+import client from '@/utils/client.js';
 
 export default function DialogCreateContent() {
   const dispatch = useDispatch()
@@ -48,16 +46,20 @@ export default function DialogCreateContent() {
 
     setIsLoading(true)
 
-    const file = event.target.files[0]
+    const [file] = event.target.files
 
     const formData = new FormData()
 
     formData.append('video', file)
 
     try {
-      const content = await contentService.createContent(formData)
+      const {data} = await client.post('contents', formData, {
+        headers: {
+          'content-type': 'multipart/form-data',
+        },
+      })
 
-      dispatch(setCreatedContent(content))
+      dispatch(setCreatedContent(data))
 
       dispatch(openAlert({
         type: 'success',
@@ -65,7 +67,7 @@ export default function DialogCreateContent() {
       }))
 
       setTimeout(() => {
-        dispatch(openEditContentDialog(content))
+        dispatch(openEditContentDialog(data))
 
         onCloseDialog()
       }, 0)

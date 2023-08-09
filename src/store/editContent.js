@@ -14,13 +14,13 @@ const editContentSlice = createSlice({
       state.contentToEdit = payload
 
       state.isEditContentDialogOpen = true
+
+      state.updatedContent = null
     },
     closeEditContentDialog: (state) => {
       state.isEditContentDialogOpen = false
 
       state.contentToEdit = null
-
-      state.updatedContent = null
     },
     setUpdatedContent: (state, { payload }) => {
       state.updatedContent = payload

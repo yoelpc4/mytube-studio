@@ -8,16 +8,14 @@ import ListItemText from '@mui/material/ListItemText'
 import LogoutOutlinedIcon from '@mui/icons-material/LogoutOutlined'
 import { unsetUser } from '@/store/auth.js'
 import { openAlert } from '@/store/alert.js';
-import AuthService from '@/services/AuthService.js';
-
-const authService = new AuthService()
+import client from '@/utils/client.js';
 
 export default function AvatarMenuList() {
   const dispatch = useDispatch()
 
   async function handleClickLogoutListItem() {
     try {
-      await authService.logout()
+      await client.post('auth/logout')
 
       setTimeout(() => dispatch(unsetUser()), 1000)
 

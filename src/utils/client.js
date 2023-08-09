@@ -1,6 +1,5 @@
 import axios from 'axios'
 import nprogress from 'nprogress'
-import CsrfService from '@/services/CsrfService.js';
 
 const client = axios.create({
   baseURL: import.meta.env.VITE_API_URL,
@@ -39,14 +38,12 @@ const rejectResponse = async error => {
 
   const {config, response} = error
 
-  if (response.status === 403 && response.data.message === 'Invalid CSRF token' && !config.isRetried) {
+  if (!config.isRetried && response.status === 403 && response.data.message === 'Invalid CSRF token') {
     config.isRetried = true
 
-    const csrfService = new CsrfService()
+    const {data} = await client.get('csrf-token')
 
-    const { csrfToken } = await csrfService.getCsrfToken()
-
-    client.defaults.headers.common['x-csrf-token'] = config.headers['x-csrf-token'] = csrfToken
+    client.defaults.headers.common['x-csrf-token'] = config.headers['x-csrf-token'] = data.csrfToken
 
     return client(config)
   }

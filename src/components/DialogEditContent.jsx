@@ -16,13 +16,11 @@ import {
   setUpdatedContent
 } from '@/store/editContent.js'
 import { openAlert } from '@/store/alert.js'
-import ContentService from '@/services/ContentService.js'
 import ImageField from './ImageField.jsx'
 import { STATUS_DRAFT, STATUS_PUBLISHED } from '@/constants.js'
 import useForm from '@/hooks/useForm.jsx';
 import RadioField from './RadioField.jsx';
-
-const contentService = new ContentService()
+import client from '@/utils/client.js';
 
 const statuses = [
   {
@@ -86,9 +84,9 @@ export default function DialogEditContent() {
       formData.append(field, form[field])
     }
 
-    await contentService.updateContent(content.id, formData)
+    const {data} = await client.put(`contents/${content.id}`, formData)
 
-    dispatch(setUpdatedContent(content))
+    dispatch(setUpdatedContent(data))
 
     dispatch(openAlert({
       type: 'success',

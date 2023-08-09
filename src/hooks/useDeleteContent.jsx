@@ -1,9 +1,7 @@
 import { useDispatch } from 'react-redux'
 import { useState } from 'react'
-import ContentService from '@/services/ContentService.js'
 import { openAlert } from '@/store/alert.js'
-
-const contentService = new ContentService()
+import client from '@/utils/client.js';
 
 export default function useDeleteContent({ onReload }) {
   const dispatch = useDispatch()
@@ -20,7 +18,7 @@ export default function useDeleteContent({ onReload }) {
 
   async function onDeleteContentConfirmed() {
     try {
-      await contentService.deleteContent(contentToDelete.id)
+      await client.delete(`contents/${contentToDelete.id}`)
 
       onReload()
 
