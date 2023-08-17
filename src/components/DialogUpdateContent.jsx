@@ -1,5 +1,5 @@
-import { useEffect } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
+import { useEffect, useState } from 'react'
+import { useDispatch } from 'react-redux'
 import DialogContent from '@mui/material/DialogContent'
 import Grid from '@mui/material/Unstable_Grid2'
 import Typography from '@mui/material/Typography'
@@ -7,20 +7,16 @@ import Box from '@mui/material/Box'
 import TextField from '@mui/material/TextField'
 import DialogActions from '@mui/material/DialogActions'
 import LoadingButton from '@mui/lab/LoadingButton'
-import BootstrapDialog from './BootstrapDialog.jsx'
-import BootstrapDialogTitle from './BootstrapDialogTitle.jsx'
-import {
-  closeEditContentDialog,
-  selectContentToEdit,
-  selectIsEditContentDialogOpen,
-  setUpdatedContent
-} from '@/store/editContent.js'
+import BootstrapDialog from '@/components/BootstrapDialog.jsx'
+import BootstrapDialogTitle from '@/components/BootstrapDialogTitle.jsx'
+import ImageField from '@/components/ImageField.jsx'
+import RadioField from '@/components/RadioField.jsx'
 import { openAlert } from '@/store/alert.js'
-import ImageField from './ImageField.jsx'
-import { STATUS_DRAFT, STATUS_PUBLISHED } from '@/constants.js'
-import useForm from '@/hooks/useForm.jsx';
-import RadioField from './RadioField.jsx';
-import client from '@/utils/client.js';
+import useAsync from '@/hooks/useAsync.jsx'
+import useContentEvent from '@/hooks/useContentEvent.jsx';
+import useForm from '@/hooks/useForm.jsx'
+import client from '@/utils/client.js'
+import { STATUS_DRAFT, STATUS_PUBLISHED } from '@/utils/constants.js'
 
 const statuses = [
   {
@@ -33,85 +29,108 @@ const statuses = [
   },
 ]
 
-export default function DialogEditContent() {
+export default function DialogUpdateContent() {
   const dispatch = useDispatch()
 
-  const content = useSelector(selectContentToEdit)
+  const {data, error, isLoading, run} = useAsync()
 
-  const isDialogOpen = useSelector(selectIsEditContentDialogOpen)
+  const {content, isEventCreated, isEventUpdate, dispatchContentUpdated, dispatchResetContent} = useContentEvent()
 
-  const {form, errors, isLoading, setForm, handleInput, handleSubmit} = useForm({
-    data: {
-      title: '',
-      description: '',
-      thumbnail: null,
-      tags: '',
-      status: statuses[0].value,
-    },
-    handleSuccess,
-    handleError,
+  const {inputs, errors, setInputs, handleSubmit, handleInput, handleServerErrors} = useForm({
+    title: '',
+    description: '',
+    thumbnail: null,
+    tags: '',
+    status: statuses[0].value,
   })
 
+  const [isOpen, setIsOpen] = useState(false)
+
+  const handleClose = () => {
+    dispatchResetContent()
+
+    setIsOpen(false)
+  }
+
+  const handleImageChange = value => setInputs({
+    ...inputs,
+    thumbnail: value,
+  })
+
+  const submit = () => {
+    const formData = new FormData()
+
+    for (let field in inputs) {
+      formData.append(field, inputs[field])
+    }
+
+    run(client.put(`contents/${content.id}`, formData, {
+      headers: {
+        'content-type': 'multipart/form-data',
+      },
+    }).then(({data}) => data))
+  }
+
   useEffect(() => {
-    if (!content) {
+    if (!content || !(isEventCreated || isEventUpdate)) {
       return
     }
 
-    setForm({
+    setInputs({
       title: content.title,
       description: content.description ?? '',
       thumbnail: null,
       tags: content.tags ?? '',
       status: content.status,
     })
-  }, [content])
 
-  function handleImageChange(value) {
-    setForm({
-      ...form,
-      thumbnail: value
-    })
-  }
+    setIsOpen(true)
+  }, [isEventCreated, isEventUpdate, content, setInputs])
 
-  function onCloseDialog() {
-    dispatch(closeEditContentDialog())
-  }
-
-  async function handleSuccess() {
-    const formData = new FormData()
-
-    for (let field in form) {
-      formData.append(field, form[field])
+  useEffect(() => {
+    if (!data) {
+      return
     }
-
-    const {data} = await client.put(`contents/${content.id}`, formData)
-
-    dispatch(setUpdatedContent(data))
 
     dispatch(openAlert({
       type: 'success',
-      message: 'Content has been updated'
+      message: 'Content has been updated',
     }))
 
-    dispatch(closeEditContentDialog())
-  }
+    dispatchContentUpdated(data)
 
-  function handleError() {
+    setIsOpen(false)
+  }, [dispatch, data, dispatchContentUpdated])
+
+  useEffect(() => {
+    if (!error) {
+      return
+    }
+
+    const {response} = error
+
+    if (response) {
+      if (response.status === 400) {
+        handleServerErrors(response.data.errors)
+
+        return
+      }
+    }
+
     dispatch(openAlert({
       type: 'error',
-      message: 'An error occurred while updating content'
+      message: 'An error occurred while updating content',
     }))
-  }
+  }, [dispatch, error, handleServerErrors])
 
-  return (
-    content &&
+  return content && (
     <BootstrapDialog
       fullWidth={true}
       maxWidth="md"
-      open={isDialogOpen}
-      onClose={onCloseDialog}
+      open={isOpen}
+      onClose={handleClose}
     >
-      <BootstrapDialogTitle onClose={onCloseDialog}>
+      <BootstrapDialogTitle onClose={handleClose}>
         {content.title}
       </BootstrapDialogTitle>
 
@@ -122,7 +141,7 @@ export default function DialogEditContent() {
               Details
             </Typography>
 
-            <Box component="form" id="edit-video-form" onSubmit={handleSubmit}>
+            <Box component="form" id="edit-video-form" onSubmit={handleSubmit(submit)}>
               <TextField
                 id="title"
                 name="title"
@@ -132,7 +151,7 @@ export default function DialogEditContent() {
                 fullWidth
                 autoFocus
                 margin="normal"
-                value={form.title}
+                value={inputs.title}
                 error={!!errors.title}
                 helperText={errors.title}
                 onInput={handleInput}
@@ -147,7 +166,7 @@ export default function DialogEditContent() {
                 rows={5}
                 fullWidth
                 margin="normal"
-                value={form.description}
+                value={inputs.description}
                 error={!!errors.description}
                 helperText={errors.description}
                 onInput={handleInput}
@@ -171,7 +190,7 @@ export default function DialogEditContent() {
                 label="Tags"
                 fullWidth
                 margin="normal"
-                value={form.tags}
+                value={inputs.tags}
                 error={!!errors.tags}
                 helperText={errors.tags ?? 'Enter a comma after each tag'}
                 onInput={handleInput}
@@ -221,8 +240,8 @@ export default function DialogEditContent() {
             <RadioField
               label="Status"
               name="status"
-              records={statuses}
-              value={form.status}
+              options={statuses}
+              value={inputs.status}
               error={!!errors.status}
               helperText={errors.status}
               sx={{mt: 2}}

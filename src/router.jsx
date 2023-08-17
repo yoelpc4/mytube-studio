@@ -2,7 +2,7 @@ import { createBrowserRouter } from 'react-router-dom'
 import App from '@/App.jsx'
 import Primary from '@/layouts/Primary.jsx'
 import Home from '@/pages/Home.jsx'
-import ChannelContents from '@/pages/ChannelContents.jsx'
+import Contents from '@/pages/Contents.jsx'
 
 const router = createBrowserRouter([
   {
@@ -17,7 +17,7 @@ const router = createBrowserRouter([
           },
           {
             path: '/contents',
-            element: <ChannelContents/>,
+            element: <Contents/>,
           },
         ],
       },

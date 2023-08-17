@@ -38,7 +38,7 @@ const rejectResponse = async error => {
 
   const {config, response} = error
 
-  if (!config.isRetried && response.status === 403 && response.data.message === 'Invalid CSRF token') {
+  if (!config.isRetried && response && response.status === 403 && response.data.message === 'Invalid CSRF token') {
     config.isRetried = true
 
     const {data} = await client.get('csrf-token')

@@ -1,5 +1,5 @@
-import { useEffect, useMemo, useState } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
+import { useEffect } from 'react'
+import { useDispatch } from 'react-redux'
 import { DataGrid, GridActionsCellItem } from '@mui/x-data-grid'
 import DeleteIcon from '@mui/icons-material/DeleteOutlined'
 import InsertDriveFileIcon from '@mui/icons-material/InsertDriveFileOutlined'
@@ -7,41 +7,60 @@ import VisibilityIcon from '@mui/icons-material/VisibilityOutlined'
 import EditIcon from '@mui/icons-material/EditOutlined'
 import Box from '@mui/material/Box'
 import Typography from '@mui/material/Typography'
-import DialogDeleteContent from './DialogDeleteContent.jsx'
-import { openEditContentDialog, selectUpdatedContent } from '@/store/editContent.js'
-import useGetContents from '@/hooks/useGetContents.jsx'
-import useDeleteContent from '@/hooks/useDeleteContent.jsx'
-import { STATUS_DRAFT, STATUS_PUBLISHED } from '@/constants.js'
 import { openAlert } from '@/store/alert.js';
-import { selectCreatedContent } from '@/store/createContent.js';
+import useContentEvent from '@/hooks/useContentEvent.jsx';
+import useDataTable from '@/hooks/useDataTable.jsx'
+import { STATUS_DRAFT, STATUS_PUBLISHED } from '@/utils/constants.js'
 
 export default function DataTableContents() {
   const dispatch = useDispatch()
 
-  const createdContent = useSelector(selectCreatedContent)
-
-  const updatedContent = useSelector(selectUpdatedContent)
-
   const {
     data,
-    dataCount,
+    total,
     error,
     isLoading,
     page,
     pageSize,
-    onPageChange,
-    onPageSizeChange,
-    onSortModelChange,
-    onReload
-  } = useGetContents()
+    handlePageChange,
+    handlePageSizeChange,
+    handleSortModelChange,
+    reload,
+  } = useDataTable('contents', {
+    sort: {
+      field: 'createdAt',
+      order: 'desc',
+    },
+  })
 
   const {
-    contentToDelete,
-    isOpenDeleteDialog,
-    onOpenDeleteContentDialog,
-    onDeleteContentConfirmed,
-    onDeleteContentCancelled
-  } = useDeleteContent({onReload})
+    content,
+    isEventCreated,
+    isEventUpdated,
+    isEventDeleted,
+    dispatchUpdateContent,
+    dispatchDeleteContent,
+  } = useContentEvent()
+
+  const handleClickUpdateCellItem = id => {
+    const content = data.find(content => content.id === id)
+
+    if (!content) {
+      return
+    }
+
+    dispatchUpdateContent(content)
+  }
+
+  const handleClickDeleteCellItem = id => {
+    const content = data.find(content => content.id === id)
+
+    if (!content) {
+      return
+    }
+
+    dispatchDeleteContent(content)
+  }
 
   const columns = [
     {
@@ -94,7 +113,7 @@ export default function DataTableContents() {
               <Typography
                 color="gray"
                 variant="caption"
-                dangerouslySetInnerHTML={{ __html: description }}
+                dangerouslySetInnerHTML={{__html: description}}
                 sx={{
                   display: '-webkit-box',
                   WebkitLineClamp: 2,
@@ -155,82 +174,55 @@ export default function DataTableContents() {
       hideable: false,
       width: 100,
       getActions: ({row}) => [
-        <GridActionsCellItem icon={<EditIcon/>} onClick={() => onEditContent(row.id)} label="Edit"/>,
-        <GridActionsCellItem icon={<DeleteIcon/>} onClick={() => onDeleteContent(row.id)} label="Delete"/>,
+        <GridActionsCellItem
+          key={row.id}
+          label="Edit"
+          icon={<EditIcon/>}
+          onClick={() => handleClickUpdateCellItem(row.id)}
+        />,
+        <GridActionsCellItem
+          key={row.id}
+          label="Delete"
+          icon={<DeleteIcon/>}
+          onClick={() => handleClickDeleteCellItem(row.id)}
+        />,
       ]
     },
   ]
 
-  const rows = useMemo(() => data.map(content => ({
+  const rows = data.map(content => ({
     ...content,
     createdAt: new Date(content.createdAt).toLocaleString(),
     updatedAt: new Date(content.updatedAt).toLocaleString(),
-  })), [data])
+  }))
 
   useEffect(() => {
     if (!error) {
       return
     }
 
-    if (import.meta.env.DEV) {
-      console.log(error)
-    }
-
     dispatch(openAlert({
       type: 'error',
       message: 'An error occurred while fetching contents',
     }))
-  }, [error])
+  }, [dispatch, error])
 
   useEffect(() => {
-    if (createdContent) {
-      onReload()
-    }
-  }, [createdContent])
-
-  useEffect(() => {
-    if (updatedContent) {
-      const isContentsUpdated = data.reduce((isContentsUpdated, content) => {
-        if (content.id === updatedContent.id) {
-          isContentsUpdated = true
-        }
-
-        return isContentsUpdated
-      }, false)
-
-      if (isContentsUpdated) {
-        onReload()
-      }
-    }
-  }, [updatedContent])
-
-  function onEditContent(id) {
-    const content = data.find(content => content.id === id)
-
-    if (!content) {
+    if (!(isEventCreated || isEventUpdated || isEventDeleted)) {
       return
     }
 
-    dispatch(openEditContentDialog(content))
-  }
-
-  function onDeleteContent(id) {
-    const content = data.find(content => content.id === id)
-
-    if (!content) {
-      return
-    }
-
-    onOpenDeleteContentDialog(content)
-  }
+    reload()
+  }, [content, isEventCreated, isEventUpdated, isEventDeleted, reload])
 
   return (
     <Box sx={{width: '100%', height: 600}}>
       <DataGrid
+        initialState={{sorting: {sortModel: [{field: 'createdAt', sort: 'desc'}]}}}
         loading={isLoading}
         columns={columns}
         rows={rows}
-        rowCount={dataCount}
+        rowCount={total}
         rowsPerPageOptions={[10, 25, 50, 75, 100]}
         pagination
         page={page}
@@ -240,16 +232,9 @@ export default function DataTableContents() {
         getRowId={row => row.id}
         getRowHeight={() => 'auto'}
         isRowSelectable={() => false}
-        onSortModelChange={onSortModelChange}
-        onPageChange={onPageChange}
-        onPageSizeChange={onPageSizeChange}
-      />
-
-      <DialogDeleteContent
-        content={contentToDelete}
-        isOpen={isOpenDeleteDialog}
-        onConfirmed={onDeleteContentConfirmed}
-        onCancelled={onDeleteContentCancelled}
+        onPageChange={handlePageChange}
+        onPageSizeChange={handlePageSizeChange}
+        onSortModelChange={handleSortModelChange}
       />
     </Box>
   )

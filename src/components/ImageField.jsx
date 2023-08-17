@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import { useEffect, useState } from 'react'
 import Box from '@mui/material/Box'
 import Button from '@mui/material/Button'
@@ -5,10 +6,18 @@ import ImageIcon from '@mui/icons-material/Image'
 import Typography from '@mui/material/Typography'
 import { FormHelperText } from '@mui/material';
 
-export default function ImageField({id, name, label, url, onImageChange, error = false, helperText = '', sx = {}}) {
+function ImageField({id, name, label, url, onImageChange, error = false, helperText = '', sx = {}}) {
   const [file, setFile] = useState(null)
 
   const [imageUrl, setImageUrl] = useState(url)
+
+  const handleChange = event => {
+    const newFile = event.target.files[0]
+
+    setFile(newFile)
+
+    onImageChange(newFile)
+  }
 
   useEffect(() => {
     if (!file) {
@@ -17,14 +26,6 @@ export default function ImageField({id, name, label, url, onImageChange, error =
 
     setImageUrl(URL.createObjectURL(file))
   }, [file])
-
-  function handleChange(event) {
-    const newFile = event.target.files[0]
-
-    setFile(newFile)
-
-    onImageChange(newFile)
-  }
 
   return (
     <Box sx={sx}>
@@ -87,3 +88,16 @@ export default function ImageField({id, name, label, url, onImageChange, error =
     </Box>
   )
 }
+
+ImageField.propTypes = {
+  id: PropTypes.string,
+  name: PropTypes.string,
+  label: PropTypes.string,
+  url: PropTypes.string,
+  onImageChange: PropTypes.func,
+  error: PropTypes.bool,
+  helperText: PropTypes.string,
+  sx: PropTypes.object,
+}
+
+export default ImageField

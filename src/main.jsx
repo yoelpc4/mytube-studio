@@ -10,16 +10,16 @@ import '@/assets/css/index.css'
 
 try {
   const [csrfTokenResult, userResult] = await Promise.allSettled([
-    client.get('csrf-token'),
-    client.get('auth/user'),
+    client.get('csrf-token').then(({data}) => data),
+    client.get('auth/user').then(({data}) => data),
   ])
 
   if (csrfTokenResult.status === 'fulfilled') {
-    client.defaults.headers.common['x-csrf-token'] = csrfTokenResult.value.data.csrfToken
+    client.defaults.headers.common['x-csrf-token'] = csrfTokenResult.value.csrfToken
   }
 
   if (userResult.status === 'fulfilled') {
-    store.dispatch(setUser(userResult.value.data))
+    store.dispatch(setUser(userResult.value))
   }
 } catch {
   // no-op

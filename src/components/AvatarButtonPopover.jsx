@@ -7,11 +7,11 @@ import AvatarMenuList from './AvatarMenuList.jsx'
 export default function AvatarButtonPopover() {
   const [anchorEl, setAnchorEl] = useState(null)
 
-  const open = Boolean(anchorEl)
+  const isOpen = !!anchorEl
 
-  function handleClick(event) {
-    setAnchorEl(event.currentTarget)
-  }
+  const handleClick = event => setAnchorEl(event.currentTarget)
+
+  const handleClose = () => setAnchorEl(null)
 
   return (
     <>
@@ -20,7 +20,7 @@ export default function AvatarButtonPopover() {
       </Button>
 
       <Popover
-        open={open}
+        open={isOpen}
         anchorEl={anchorEl}
         anchorOrigin={{
           vertical: 'bottom',
@@ -30,6 +30,7 @@ export default function AvatarButtonPopover() {
           vertical: 'top',
           horizontal: 'right',
         }}
+        onClose={handleClose}
       >
         <AvatarMenuList />
       </Popover>

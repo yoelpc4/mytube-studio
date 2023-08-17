@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom'
 import Toolbar from '@mui/material/Toolbar'
 import IconButton from '@mui/material/IconButton'
@@ -7,7 +8,9 @@ import MuiAppBar from '@mui/material/AppBar'
 import YouTubeIcon from '@mui/icons-material/YouTube'
 import MenuOutlinedIcon from '@mui/icons-material/MenuOutlined.js'
 import AvatarButtonPopover from '@/components/AvatarButtonPopover.jsx'
-import DialogCreateContent from '@/components/DialogCreateContent.jsx'
+import VideoCallOutlinedIcon from '@mui/icons-material/VideoCallOutlined.js';
+import Button from '@mui/material/Button';
+import useContentEvent from '@/hooks/useContentEvent.jsx';
 
 const StyledAppBar = styled(MuiAppBar, {
   shouldForwardProp: prop => prop !== 'open',
@@ -26,20 +29,18 @@ const StyledAppBar = styled(MuiAppBar, {
   }),
 }))
 
-export default function AppBar({ open, setOpen }) {
-  function onClickToggleDrawer() {
-    setOpen(!open)
-  }
+function AppBar({isOpen, setIsOpen}) {
+  const {dispatchCreateContent} = useContentEvent()
 
   return (
-    <StyledAppBar elevation={0} position="fixed" open={open}>
+    <StyledAppBar elevation={0} position="fixed" open={isOpen}>
       <Toolbar>
         <IconButton
           edge="start"
           color="inherit"
           aria-label="toggle drawer"
           sx={{ marginRight: '16px' }}
-          onClick={onClickToggleDrawer}
+          onClick={() => setIsOpen(!isOpen)}
         >
           <MenuOutlinedIcon sx={{ color: '#000' }}/>
         </IconButton>
@@ -60,10 +61,19 @@ export default function AppBar({ open, setOpen }) {
 
         <div style={{ flexGrow: 1 }}></div>
 
-        <DialogCreateContent />
+        <Button variant="outlined" startIcon={<VideoCallOutlinedIcon/>} onClick={dispatchCreateContent}>
+          CREATE
+        </Button>
 
         <AvatarButtonPopover/>
       </Toolbar>
     </StyledAppBar>
   )
 }
+
+AppBar.propTypes = {
+  isOpen: PropTypes.bool,
+  setIsOpen: PropTypes.func,
+}
+
+export default AppBar

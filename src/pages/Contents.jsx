@@ -1,8 +1,9 @@
 import Grid from '@mui/material/Unstable_Grid2'
 import Typography from '@mui/material/Typography'
 import DataTableContents from '@/components/DataTableContents.jsx'
+import DialogDeleteContent from '@/components/DialogDeleteContent.jsx';
 
-export default function ChannelContents() {
+export default function Contents() {
   return (
     <Grid container spacing={2} maxWidth="xl">
       <Grid xs={12}>
@@ -13,6 +14,8 @@ export default function ChannelContents() {
 
       <Grid xs={12}>
         <DataTableContents />
+
+        <DialogDeleteContent/>
       </Grid>
     </Grid>
   )

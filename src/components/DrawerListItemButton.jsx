@@ -1,17 +1,15 @@
-import { useMemo } from 'react'
+import PropTypes from 'prop-types';
 import { NavLink, useMatch } from 'react-router-dom'
 import ListItemIcon from '@mui/material/ListItemIcon'
 import ListItemText from '@mui/material/ListItemText'
 import ListItemButton from '@mui/material/ListItemButton'
 
-export default function DrawerListItemButton({ open, route }) {
+function DrawerListItemButton({isOpen, route}) {
   const match = useMatch({
     path: route.to,
   })
 
-  const color = useMemo(() => {
-    return !!match ? 'primary' : 'inherit'
-  }, [match])
+  const color = match ? 'primary' : 'inherit'
 
   const MenuIcon = route.icon
 
@@ -22,8 +20,8 @@ export default function DrawerListItemButton({ open, route }) {
       selected={!!match}
       sx={{
         minHeight: 48,
-        flexDirection: open ? 'row' : 'column',
-        justifyContent: open ? 'initial' : 'center',
+        flexDirection: isOpen ? 'row' : 'column',
+        justifyContent: isOpen ? 'initial' : 'center',
         alignItems: 'center',
         px: 2.5,
         borderRadius: '0 10px 10px 0',
@@ -45,10 +43,17 @@ export default function DrawerListItemButton({ open, route }) {
         primaryTypographyProps={{
           color,
           sx: {
-            fontSize: open ? '1rem' : '.8rem'
+            fontSize: isOpen ? '1rem' : '.8rem',
           },
         }}
       />
     </ListItemButton>
   )
 }
+
+DrawerListItemButton.propTypes = {
+  isOpen: PropTypes.bool,
+  route: PropTypes.object,
+}
+
+export default DrawerListItemButton
