@@ -21,7 +21,7 @@ export default function App() {
   const user = useSelector(selectUser)
 
   if (!user) {
-    window.location.replace(`http://mytube.test/login?redirect=http://studio.mytube.test${pathname}`)
+    window.location.replace(`${import.meta.env.VITE_APP_URL}/login?redirect=${import.meta.env.VITE_STUDIO_URL}${pathname}`)
 
     return
   }

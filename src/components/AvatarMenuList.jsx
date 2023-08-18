@@ -19,7 +19,7 @@ export default function AvatarMenuList() {
 
       setTimeout(() => dispatch(unsetUser()), 1000)
 
-      window.location.replace('http://mytube.test')
+      window.location.replace(import.meta.env.VITE_APP_URL)
     } catch (error) {
       dispatch(openAlert({
         type: 'error',
