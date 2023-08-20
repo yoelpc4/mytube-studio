@@ -4,7 +4,7 @@ import CssBaseline from '@mui/material/CssBaseline'
 import Box from '@mui/material/Box'
 import Container from '@mui/material/Container'
 import { ContentEventProvider } from '@/contexts/contentEvent.jsx';
-import AppBar from '@/components/Primary/AppBar.jsx'
+import AppBar from '@/components/AppBar.jsx'
 import Drawer from '@/components/Drawer.jsx'
 import DialogUpdateContent from '@/components/DialogUpdateContent.jsx'
 import DialogCreateContent from '@/components/DialogCreateContent.jsx';

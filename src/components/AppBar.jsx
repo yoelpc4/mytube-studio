@@ -7,9 +7,9 @@ import { styled } from '@mui/material/styles'
 import MuiAppBar from '@mui/material/AppBar'
 import YouTubeIcon from '@mui/icons-material/YouTube'
 import MenuOutlinedIcon from '@mui/icons-material/MenuOutlined.js'
-import AvatarButtonPopover from '@/components/AvatarButtonPopover.jsx'
 import VideoCallOutlinedIcon from '@mui/icons-material/VideoCallOutlined.js';
 import Button from '@mui/material/Button';
+import AvatarButtonPopover from '@/components/AvatarButtonPopover.jsx';
 import useContentEvent from '@/hooks/useContentEvent.jsx';
 
 const StyledAppBar = styled(MuiAppBar, {
@@ -65,7 +65,7 @@ function AppBar({isOpen, setIsOpen}) {
           CREATE
         </Button>
 
-        <AvatarButtonPopover/>
+        <AvatarButtonPopover />
       </Toolbar>
     </StyledAppBar>
   )
