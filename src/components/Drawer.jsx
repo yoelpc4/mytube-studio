@@ -7,7 +7,7 @@ import DashboardIcon from '@mui/icons-material/Dashboard'
 import VideoLibraryIcon from '@mui/icons-material/VideoLibrary'
 import DrawerListItemButton from '@/components/DrawerListItemButton.jsx'
 
-const StyledDrawer = styled(MuiDrawer, { shouldForwardProp: prop => prop !== 'open' })(
+const StyledDrawer = styled(MuiDrawer, {shouldForwardProp: prop => prop !== 'open'})(
   ({ theme, open }) => ({
     '& .MuiDrawer-paper': {
       position: 'relative',
@@ -49,10 +49,10 @@ const routes = [
 
 function Drawer({isOpen}) {
   return (
-    <StyledDrawer variant="permanent" open={isOpen} sx={{ pt: 8 }}>
+    <StyledDrawer variant="permanent" open={isOpen} sx={{pt: 8}}>
       <List component="nav">
         {routes.map((route, index) => (
-          <ListItem key={index} disablePadding sx={{ display: 'block' }}>
+          <ListItem key={index} disablePadding sx={{display: 'block'}}>
             <DrawerListItemButton isOpen={isOpen} route={route} />
           </ListItem>
         ))}

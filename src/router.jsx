@@ -3,6 +3,7 @@ import App from '@/App.jsx'
 import Primary from '@/layouts/Primary.jsx'
 import Home from '@/pages/Home.jsx'
 import Contents from '@/pages/Contents.jsx'
+import NotFound from '@/pages/NotFound.jsx';
 
 const router = createBrowserRouter([
   {
@@ -12,12 +13,16 @@ const router = createBrowserRouter([
         element: <Primary/>,
         children: [
           {
-            path: '/',
+            index: true,
             element: <Home/>,
           },
           {
             path: '/contents',
             element: <Contents/>,
+          },
+          {
+            path: '*',
+            element: <NotFound/>,
           },
         ],
       },

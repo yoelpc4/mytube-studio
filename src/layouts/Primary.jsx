@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { Outlet } from 'react-router-dom'
+import { useMediaQuery } from '@mui/material';
 import CssBaseline from '@mui/material/CssBaseline'
 import Box from '@mui/material/Box'
 import Container from '@mui/material/Container'
@@ -10,25 +11,29 @@ import DialogUpdateContent from '@/components/DialogUpdateContent.jsx'
 import DialogCreateContent from '@/components/DialogCreateContent.jsx';
 
 export default function Primary() {
-  const [isOpen, setIsOpen] = useState(true)
+  const isNotMobile = useMediaQuery(theme => theme.breakpoints.up('sm'))
+
+  const [isOpen, setIsOpen] = useState(isNotMobile)
+
+  const toggleIsOpen = () => setIsOpen(isOpen => !isOpen)
 
   return (
-    <Box sx={{display: 'flex'}}>
-      <ContentEventProvider>
+    <ContentEventProvider>
+      <Box sx={{display: 'flex'}}>
         <CssBaseline/>
 
-        <AppBar isOpen={isOpen} setIsOpen={setIsOpen}/>
+        <AppBar isOpen={isOpen} toggleIsOpen={toggleIsOpen}/>
 
         <Drawer isOpen={isOpen}/>
 
-        <Container component="main" maxWidth="xl" sx={{flexGrow: 1, height: '90vh', overflow: 'auto', mt: 8, px: 4}}>
+        <Container component="main" maxWidth="xl" sx={{mt: 8}}>
           <Outlet/>
         </Container>
 
         <DialogCreateContent/>
 
         <DialogUpdateContent/>
-      </ContentEventProvider>
-    </Box>
+      </Box>
+    </ContentEventProvider>
   )
 }

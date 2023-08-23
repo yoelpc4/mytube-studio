@@ -14,8 +14,8 @@ import Divider from '@mui/material/Divider';
 import ListItemAvatar from '@mui/material/ListItemAvatar';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
-import ListItemLogout from '@/components/ListItemLogout.jsx';
 import { selectUser } from '@/store/auth.js';
+import ListItemLogout from '@/components/ListItemLogout.jsx';
 
 export default function AvatarButtonPopover() {
   const [anchorEl, setAnchorEl] = useState(null)

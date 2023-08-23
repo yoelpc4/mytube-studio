@@ -1,8 +1,8 @@
-import { Outlet, useLocation } from 'react-router-dom'
 import { useSelector } from 'react-redux';
+import { Outlet, useLocation } from 'react-router-dom'
 import { createTheme, ThemeProvider } from '@mui/material/styles'
-import AlertContainer from '@/components/AlertContainer.jsx'
 import { selectUser } from '@/store/auth.js';
+import AlertContainer from '@/components/AlertContainer.jsx'
 
 const theme = createTheme({
   palette: {
@@ -30,7 +30,7 @@ export default function App() {
     <ThemeProvider theme={theme}>
       <AlertContainer />
 
-      <Outlet />
+      <Outlet/>
     </ThemeProvider>
   )
 }

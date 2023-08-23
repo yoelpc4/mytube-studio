@@ -29,7 +29,7 @@ const StyledAppBar = styled(MuiAppBar, {
   }),
 }))
 
-function AppBar({isOpen, setIsOpen}) {
+function AppBar({isOpen, toggleIsOpen}) {
   const {dispatchCreateContent} = useContentEvent()
 
   return (
@@ -40,7 +40,7 @@ function AppBar({isOpen, setIsOpen}) {
           color="inherit"
           aria-label="toggle drawer"
           sx={{ marginRight: '16px' }}
-          onClick={() => setIsOpen(!isOpen)}
+          onClick={toggleIsOpen}
         >
           <MenuOutlinedIcon sx={{ color: '#000' }}/>
         </IconButton>
@@ -73,7 +73,7 @@ function AppBar({isOpen, setIsOpen}) {
 
 AppBar.propTypes = {
   isOpen: PropTypes.bool,
-  setIsOpen: PropTypes.func,
+  toggleIsOpen: PropTypes.func,
 }
 
 export default AppBar
