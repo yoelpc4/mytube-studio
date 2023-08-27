@@ -46,6 +46,8 @@ export default function DialogUpdateContent() {
 
   const [isOpen, setIsOpen] = useState(false)
 
+  const videoLink = `${import.meta.env.VITE_APP_URL}/watch/${content?.id}`
+
   const handleClose = () => {
     dispatchResetContent()
 
@@ -218,11 +220,11 @@ export default function DialogUpdateContent() {
                 <Typography
                   component="a"
                   variant="body2"
-                  href={content.videoUrl}
+                  href={videoLink}
                   target="_blank"
                   rel="noopener, noreferrer"
                 >
-                  {content.videoUrl}
+                  {videoLink}
                 </Typography>
               </Box>
 

@@ -7,7 +7,7 @@ export default function Contents() {
   return (
     <Grid container spacing={2} maxWidth="xl">
       <Grid xs={12}>
-        <Typography component="h2" variant="h5" sx={{ fontWeight: 500 }}>
+        <Typography component="h1" variant="h5" sx={{ fontWeight: 500 }}>
           Channel Contents
         </Typography>
       </Grid>

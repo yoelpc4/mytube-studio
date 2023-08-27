@@ -126,7 +126,6 @@ export default function DialogCreateContent() {
           </Typography>
 
           <LoadingButton
-            color="secondary"
             variant="contained"
             loading={isLoading}
             disabled={isLoading}

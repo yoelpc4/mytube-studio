@@ -26,7 +26,7 @@ export default function Primary() {
 
         <Drawer isOpen={isOpen}/>
 
-        <Container component="main" maxWidth="xl" sx={{mt: 8}}>
+        <Container component="main" maxWidth="xl" sx={{mt: 10}}>
           <Outlet/>
         </Container>
 

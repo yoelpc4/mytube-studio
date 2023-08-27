@@ -24,13 +24,12 @@ function DrawerListItemButton({isOpen, route}) {
         justifyContent: isOpen ? 'initial' : 'center',
         alignItems: 'center',
         px: 2.5,
-        borderRadius: '0 10px 10px 0',
       }}
     >
       <ListItemIcon
         sx={{
           minWidth: 0,
-          mr: open ? 2 : 'auto',
+          mr: isOpen ? 2 : 'auto',
           justifyContent: 'center',
           alignItems: 'center',
         }}

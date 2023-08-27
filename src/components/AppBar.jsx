@@ -33,7 +33,7 @@ function AppBar({isOpen, toggleIsOpen}) {
   const {dispatchCreateContent} = useContentEvent()
 
   return (
-    <StyledAppBar elevation={0} position="fixed" open={isOpen}>
+    <StyledAppBar elevation={1} position="fixed" open={isOpen}>
       <Toolbar>
         <IconButton
           edge="start"

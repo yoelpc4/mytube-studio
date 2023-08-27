@@ -13,12 +13,12 @@ const StyledDrawer = styled(MuiDrawer, {shouldForwardProp: prop => prop !== 'ope
       position: 'relative',
       whiteSpace: 'nowrap',
       width: 240,
+      height: '100vh',
       transition: theme.transitions.create('width', {
         easing: theme.transitions.easing.sharp,
         duration: theme.transitions.duration.enteringScreen,
       }),
       boxSizing: 'border-box',
-      borderRight: 'none',
       ...(!open && {
         overflowX: 'hidden',
         transition: theme.transitions.create('width', {
@@ -49,8 +49,8 @@ const routes = [
 
 function Drawer({isOpen}) {
   return (
-    <StyledDrawer variant="permanent" open={isOpen} sx={{pt: 8}}>
-      <List component="nav">
+    <StyledDrawer variant="permanent" open={isOpen}>
+      <List component="nav" sx={{pt: 10}}>
         {routes.map((route, index) => (
           <ListItem key={index} disablePadding sx={{display: 'block'}}>
             <DrawerListItemButton isOpen={isOpen} route={route} />

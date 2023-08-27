@@ -67,20 +67,22 @@ export default function AvatarButtonPopover() {
 
               <Divider/>
 
-              <ListItem
-                component={Link}
-                href={`${import.meta.env.VITE_APP_URL}/channel/${user.username}`}
-                sx={{textDecoration: 'none', color: 'inherit'}}
-                disablePadding
-              >
-                <ListItemButton>
-                  <ListItemIcon>
-                    <PortraitOutlinedIcon/>
-                  </ListItemIcon>
+              <li>
+                <ListItem
+                  component={Link}
+                  href={`${import.meta.env.VITE_APP_URL}/channel/${user.username}`}
+                  disablePadding
+                  sx={{textDecoration: 'none', color: 'inherit'}}
+                >
+                  <ListItemButton>
+                    <ListItemIcon>
+                      <PortraitOutlinedIcon/>
+                    </ListItemIcon>
 
-                  <ListItemText primary="Your Channel"/>
-                </ListItemButton>
-              </ListItem>
+                    <ListItemText primary="Your Channel"/>
+                  </ListItemButton>
+                </ListItem>
+              </li>
 
               <ListItemLogout/>
             </List>

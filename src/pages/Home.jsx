@@ -1,40 +1,63 @@
-import Grid from '@mui/material/Grid'
-import Paper from '@mui/material/Paper'
+import { useEffect } from 'react';
+import { useDispatch } from 'react-redux';
+import Grid from '@mui/material/Unstable_Grid2'
+import Typography from '@mui/material/Typography';
+import { openAlert } from '@/store/alert.js';
+import ChannelAnalyticsCard from '@/components/ChannelAnalyticsCard.jsx';
+import LatestContentCard from '@/components/LatestContentCard.jsx';
+import RecentSubscribersCard from '@/components/RecentSubscribersCard.jsx';
+import useAsync from '@/hooks/useAsync.jsx';
+import client from '@/utils/client.js';
 
 export default function Home() {
-  return (
+  const dispatch = useDispatch()
+
+  const {data, error, run} = useAsync()
+
+  useEffect(() => {
+    const controller = new AbortController
+
+    run(client('dashboard', {
+      signal: controller.signal,
+    }).then(({data}) => data))
+
+    return () => controller.abort()
+  }, [run])
+
+  useEffect(() => {
+    if (!error) {
+      return
+    }
+
+    dispatch(openAlert({
+      type: 'error',
+      message: 'An error occurred while fetching dashboard',
+    }))
+  }, [dispatch, error])
+
+  return data && (
     <Grid container spacing={2} maxWidth="xl">
-      {/* Chart */}
-      <Grid item xs={12} md={8} lg={9}>
-        <Paper
-          sx={{
-            p: 2,
-            display: 'flex',
-            flexDirection: 'column',
-            height: 240,
-          }}
-        >
-
-        </Paper>
+      <Grid xs={12}>
+        <Typography component="h1" variant="h5" sx={{fontWeight: 500}}>
+          Channel Dashboard
+        </Typography>
       </Grid>
-      {/* Recent Deposits */}
-      <Grid item xs={12} md={4} lg={3}>
-        <Paper
-          sx={{
-            p: 2,
-            display: 'flex',
-            flexDirection: 'column',
-            height: 240,
-          }}
-        >
 
-        </Paper>
+      <Grid xs={12} md={6} lg={4}>
+        <LatestContentCard latestContent={data.latestContent} />
       </Grid>
-      {/* Recent Orders */}
-      <Grid item xs={12}>
-        <Paper sx={{ p: 2, display: 'flex', flexDirection: 'column' }}>
 
-        </Paper>
+      <Grid xs={12} md={6} lg={4}>
+        <ChannelAnalyticsCard
+          subscribersCount={data.subscribersCount}
+          contentsCount={data.contentsCount}
+          contentViewsCount={data.contentViewsCount}
+          contentLikesCount={data.contentLikesCount}
+        />
+      </Grid>
+
+      <Grid xs={12} md={6} lg={4}>
+        <RecentSubscribersCard recentSubscribers={data.recentSubscribers} />
       </Grid>
     </Grid>
   )
