@@ -67,8 +67,8 @@ function RecentSubscribersCard({recentSubscribers}) {
           <img src={videographerImageUrl} alt="videographer" width="144"/>
 
           <Typography variant="body2" color="gray">
-            Want to see metrics on your recent video? <br/>
-            Upload and publish a video to get started.
+            Publish more engaged videos <br/>
+            to get a subscriber for your channel
           </Typography>
 
           <Button variant="contained" onClick={dispatchCreateContent}>

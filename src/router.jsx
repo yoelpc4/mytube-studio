@@ -1,7 +1,7 @@
 import { createBrowserRouter } from 'react-router-dom'
 import App from '@/App.jsx'
 import Primary from '@/layouts/Primary.jsx'
-import Home from '@/pages/Home.jsx'
+import Dashboard from '@/pages/Dashboard.jsx'
 import Contents from '@/pages/Contents.jsx'
 import NotFound from '@/pages/NotFound.jsx';
 import Customization from '@/pages/Customization.jsx';
@@ -15,7 +15,7 @@ const router = createBrowserRouter([
         children: [
           {
             index: true,
-            element: <Home/>,
+            element: <Dashboard/>,
           },
           {
             path: '/contents',

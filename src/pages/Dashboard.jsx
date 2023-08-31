@@ -9,7 +9,7 @@ import RecentSubscribersCard from '@/components/RecentSubscribersCard.jsx';
 import useAsync from '@/hooks/useAsync.jsx';
 import client from '@/utils/client.js';
 
-export default function Home() {
+export default function Dashboard() {
   const dispatch = useDispatch()
 
   const {data, error, run} = useAsync()
