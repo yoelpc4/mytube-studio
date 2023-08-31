@@ -5,6 +5,7 @@ import MuiDrawer from '@mui/material/Drawer'
 import ListItem from '@mui/material/ListItem'
 import DashboardIcon from '@mui/icons-material/Dashboard'
 import VideoLibraryIcon from '@mui/icons-material/VideoLibrary'
+import AutoFixHighIcon from '@mui/icons-material/AutoFixHigh';
 import DrawerListItemButton from '@/components/DrawerListItemButton.jsx'
 
 const StyledDrawer = styled(MuiDrawer, {shouldForwardProp: prop => prop !== 'open'})(
@@ -44,6 +45,11 @@ const routes = [
     to: '/contents',
     text: 'Contents',
     icon: VideoLibraryIcon,
+  },
+  {
+    to: '/customization',
+    text: 'Customization',
+    icon: AutoFixHighIcon,
   },
 ]
 

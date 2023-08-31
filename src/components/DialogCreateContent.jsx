@@ -127,6 +127,7 @@ export default function DialogCreateContent() {
 
           <LoadingButton
             variant="contained"
+            color="secondary"
             loading={isLoading}
             disabled={isLoading}
             sx={{mt: 4, marginBottom: 'auto'}}

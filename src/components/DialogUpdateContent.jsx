@@ -36,7 +36,7 @@ export default function DialogUpdateContent() {
 
   const {content, isEventCreated, isEventUpdate, dispatchContentUpdated, dispatchResetContent} = useContentEvent()
 
-  const {inputs, errors, setInputs, handleSubmit, handleInput, handleServerErrors} = useForm({
+  const {inputs, errors, setInputs, handleSubmit, handleInput, updateInput, handleServerErrors} = useForm({
     title: '',
     description: '',
     thumbnail: null,
@@ -53,11 +53,6 @@ export default function DialogUpdateContent() {
 
     setIsOpen(false)
   }
-
-  const handleImageChange = value => setInputs({
-    ...inputs,
-    thumbnail: value,
-  })
 
   const submit = () => {
     const formData = new FormData()
@@ -181,8 +176,7 @@ export default function DialogUpdateContent() {
                 url={content.thumbnailUrl}
                 error={!!errors.thumbnail}
                 helperText={errors.thumbnail}
-                sx={{my: 2}}
-                onImageChange={handleImageChange}
+                onImageChange={value => updateInput('thumbnail', value)}
               />
 
               <TextField

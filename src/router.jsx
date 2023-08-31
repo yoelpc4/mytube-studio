@@ -4,6 +4,7 @@ import Primary from '@/layouts/Primary.jsx'
 import Home from '@/pages/Home.jsx'
 import Contents from '@/pages/Contents.jsx'
 import NotFound from '@/pages/NotFound.jsx';
+import Customization from '@/pages/Customization.jsx';
 
 const router = createBrowserRouter([
   {
@@ -19,6 +20,10 @@ const router = createBrowserRouter([
           {
             path: '/contents',
             element: <Contents/>,
+          },
+          {
+            path: '/customization',
+            element: <Customization/>,
           },
           {
             path: '*',

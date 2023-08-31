@@ -41,7 +41,7 @@ function RecentSubscribersCard({recentSubscribers}) {
                   sx={{textDecoration: 'none', color: 'inherit'}}
                 >
                   <ListItemAvatar>
-                    <Avatar alt="avatar" src="https://i.pravatar.cc/200"/>
+                    <Avatar src={recentSubscriber.profileUrl} alt={recentSubscriber.name}/>
                   </ListItemAvatar>
 
                   <ListItemText
