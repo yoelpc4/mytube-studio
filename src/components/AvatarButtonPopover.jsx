@@ -49,8 +49,8 @@ export default function AvatarButtonPopover() {
       >
         <Box sx={{width: '100%', maxWidth: 360, bgcolor: 'background.paper'}}>
           <nav>
-            <List>
-              <ListItem alignItems="flex-start" onClick={handleClose}>
+            <List onClick={handleClose}>
+              <ListItem alignItems="flex-start">
                 <ListItemAvatar>
                   <Avatar src={user.profileUrl} alt={user.name}/>
                 </ListItemAvatar>
