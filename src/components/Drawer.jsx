@@ -55,14 +55,16 @@ const routes = [
 
 function Drawer({isOpen}) {
   return (
-    <StyledDrawer variant="permanent" open={isOpen}>
-      <List component="nav" sx={{pt: 10}}>
-        {routes.map((route, index) => (
-          <ListItem key={index} disablePadding sx={{display: 'block'}}>
-            <DrawerListItemButton isOpen={isOpen} route={route} />
-          </ListItem>
-        ))}
-      </List>
+    <StyledDrawer component="aside" variant="permanent" open={isOpen}>
+      <nav>
+        <List sx={{pt: 8}}>
+          {routes.map((route, index) => (
+            <ListItem key={index} disablePadding sx={{display: 'block'}}>
+              <DrawerListItemButton isOpen={isOpen} route={route} />
+            </ListItem>
+          ))}
+        </List>
+      </nav>
     </StyledDrawer>
   )
 }
