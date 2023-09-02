@@ -3,7 +3,6 @@ import { Outlet } from 'react-router-dom'
 import { useMediaQuery } from '@mui/material';
 import CssBaseline from '@mui/material/CssBaseline'
 import Box from '@mui/material/Box'
-import Container from '@mui/material/Container'
 import { ContentEventProvider } from '@/contexts/contentEvent.jsx';
 import AppBar from '@/components/AppBar.jsx'
 import Drawer from '@/components/Drawer.jsx'
@@ -26,9 +25,9 @@ export default function Primary() {
 
         <Drawer isOpen={isOpen}/>
 
-        <Container component="main" maxWidth="xl" sx={{mt: 10}}>
+        <Box component="main" sx={{flexGrow: 1, p: 3, mt: 8}}>
           <Outlet/>
-        </Container>
+        </Box>
 
         <DialogCreateContent/>
 
