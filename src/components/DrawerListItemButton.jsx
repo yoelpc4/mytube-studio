@@ -4,7 +4,7 @@ import ListItemIcon from '@mui/material/ListItemIcon'
 import ListItemText from '@mui/material/ListItemText'
 import ListItemButton from '@mui/material/ListItemButton'
 
-function DrawerListItemButton({isOpen, route}) {
+function DrawerListItemButton({route, isOpen, isMobile}) {
   const match = useMatch({
     path: route.to,
   })
@@ -20,18 +20,20 @@ function DrawerListItemButton({isOpen, route}) {
       selected={!!match}
       sx={{
         minHeight: 48,
-        flexDirection: isOpen ? 'row' : 'column',
-        justifyContent: isOpen ? 'initial' : 'center',
         alignItems: 'center',
         px: 2.5,
+        ...(!isMobile && {
+          flexDirection: isOpen ? 'row' : 'column',
+          justifyContent: isOpen ? 'initial' : 'center',
+        }),
       }}
     >
       <ListItemIcon
         sx={{
           minWidth: 0,
-          mr: isOpen ? 2 : 'auto',
           justifyContent: 'center',
           alignItems: 'center',
+          mr: isOpen ? 2 : 0,
         }}
       >
         <MenuIcon color={color} />
@@ -41,9 +43,11 @@ function DrawerListItemButton({isOpen, route}) {
         primary={route.text}
         primaryTypographyProps={{
           color,
-          sx: {
-            fontSize: isOpen ? '1rem' : '.8rem',
-          },
+          ...(!isMobile && {
+            sx: {
+              fontSize: isOpen ? '1rem' : '.5rem',
+            },
+          }),
         }}
       />
     </ListItemButton>
@@ -51,8 +55,9 @@ function DrawerListItemButton({isOpen, route}) {
 }
 
 DrawerListItemButton.propTypes = {
-  isOpen: PropTypes.bool,
   route: PropTypes.object,
+  isOpen: PropTypes.bool,
+  isMobile: PropTypes.bool,
 }
 
 export default DrawerListItemButton

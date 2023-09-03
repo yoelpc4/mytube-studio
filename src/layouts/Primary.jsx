@@ -10,9 +10,9 @@ import DialogUpdateContent from '@/components/DialogUpdateContent.jsx'
 import DialogCreateContent from '@/components/DialogCreateContent.jsx';
 
 export default function Primary() {
-  const isNotMobile = useMediaQuery(theme => theme.breakpoints.up('sm'))
+  const isMobile = useMediaQuery(theme => theme.breakpoints.down('sm'))
 
-  const [isOpen, setIsOpen] = useState(isNotMobile)
+  const [isOpen, setIsOpen] = useState(!isMobile)
 
   const toggleIsOpen = () => setIsOpen(isOpen => !isOpen)
 
@@ -21,9 +21,9 @@ export default function Primary() {
       <Box sx={{display: 'flex'}}>
         <CssBaseline/>
 
-        <AppBar isOpen={isOpen} toggleIsOpen={toggleIsOpen}/>
+        <AppBar isOpen={isOpen} isMobile={isMobile} toggleIsOpen={toggleIsOpen}/>
 
-        <Drawer isOpen={isOpen}/>
+        <Drawer isOpen={isOpen} isMobile={isMobile} toggleIsOpen={toggleIsOpen} />
 
         <Box component="main" sx={{flexGrow: 1, p: 3, mt: 8}}>
           <Outlet/>
