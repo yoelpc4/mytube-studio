@@ -25,7 +25,7 @@ export default function Primary() {
 
         <Drawer isOpen={isOpen} isMobile={isMobile} toggleIsOpen={toggleIsOpen} />
 
-        <Box component="main" sx={{flexGrow: 1, p: 3, mt: 8}}>
+        <Box component="main" sx={{flexGrow: 1, p: isMobile ? 2 : 3, mt: 8}}>
           <Outlet/>
         </Box>
 
