@@ -5,7 +5,7 @@ import DialogDeleteContent from '@/components/DialogDeleteContent.jsx';
 
 export default function Contents() {
   return (
-    <Grid container spacing={2} maxWidth="xl">
+    <Grid container rowSpacing={2} maxWidth="xl">
       <Grid xs={12}>
         <Typography component="h1" variant="h5" sx={{ fontWeight: 500 }}>
           Channel Contents

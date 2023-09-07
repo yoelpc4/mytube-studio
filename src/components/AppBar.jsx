@@ -31,8 +31,6 @@ const StyledAppBar = styled(MuiAppBar, {
 }))
 
 function AppBar({isOpen, isMobile, toggleIsOpen}) {
-  const theme = useTheme()
-
   const {dispatchCreateContent} = useContentEvent()
 
   return (

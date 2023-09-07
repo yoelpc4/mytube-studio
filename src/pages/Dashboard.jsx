@@ -36,7 +36,7 @@ export default function Dashboard() {
   }, [dispatch, error])
 
   return data && (
-    <Grid container spacing={2} maxWidth="xl">
+    <Grid container rowSpacing={2} maxWidth="xl">
       <Grid xs={12}>
         <Typography component="h1" variant="h5" sx={{fontWeight: 500}}>
           Channel Dashboard

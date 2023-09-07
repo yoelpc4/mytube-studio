@@ -89,7 +89,7 @@ export default function Customization() {
   }, [dispatch, error, handleServerErrors])
 
   return user && (
-    <Grid container spacing={2} maxWidth="xl">
+    <Grid container rowSpacing={2} maxWidth="xl">
       <Grid xs={12}>
         <Typography component="h1" variant="h5" sx={{fontWeight: 500}}>
           Channel Customization
@@ -97,7 +97,16 @@ export default function Customization() {
       </Grid>
 
       <Grid xs={12}>
-        <Box sx={{display: 'flex', justifyContent: 'space-between', borderBottom: 1, borderColor: 'divider'}}>
+        <Box
+          sx={{
+            display: 'flex',
+            flexWrap: 'wrap',
+            justifyContent: 'space-between',
+            rowGap: 2,
+            borderBottom: 1,
+            borderColor: 'divider'
+          }}
+        >
           <Tabs value={tab} aria-label={`${scope}-tabs`} onChange={(event, value) => setTab(value)}>
             <Tab label="Basic Info" {...getA11yProps(0)}></Tab>
             <Tab label="Branding" {...getA11yProps(1)}></Tab>

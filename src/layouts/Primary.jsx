@@ -1,16 +1,16 @@
 import { useState } from 'react'
 import { Outlet } from 'react-router-dom'
-import { useMediaQuery } from '@mui/material';
 import CssBaseline from '@mui/material/CssBaseline'
 import Box from '@mui/material/Box'
 import { ContentEventProvider } from '@/contexts/contentEvent.jsx';
+import useBreakpoints from '@/hooks/useBreakpoints.jsx';
 import AppBar from '@/components/AppBar.jsx'
 import Drawer from '@/components/Drawer.jsx'
 import DialogUpdateContent from '@/components/DialogUpdateContent.jsx'
 import DialogCreateContent from '@/components/DialogCreateContent.jsx';
 
 export default function Primary() {
-  const isMobile = useMediaQuery(theme => theme.breakpoints.down('sm'))
+  const {isMobile} = useBreakpoints()
 
   const [isOpen, setIsOpen] = useState(!isMobile)
 
