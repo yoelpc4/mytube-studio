@@ -8,9 +8,12 @@ import LatestContentCard from '@/components/LatestContentCard.jsx';
 import RecentSubscribersCard from '@/components/RecentSubscribersCard.jsx';
 import useAsync from '@/hooks/useAsync.jsx';
 import client from '@/utils/client.js';
+import useBreakpoints from '@/hooks/useBreakpoints.jsx';
 
 export default function Dashboard() {
   const dispatch = useDispatch()
+
+  const {isMobile} = useBreakpoints()
 
   const {data, error, run} = useAsync()
 
@@ -36,7 +39,7 @@ export default function Dashboard() {
   }, [dispatch, error])
 
   return data && (
-    <Grid container rowSpacing={2} maxWidth="xl">
+    <Grid container columnSpacing={isMobile ? 0 : 2} rowSpacing={2} maxWidth="xl">
       <Grid xs={12}>
         <Typography component="h1" variant="h5" sx={{fontWeight: 500}}>
           Channel Dashboard
