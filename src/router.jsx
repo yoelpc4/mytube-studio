@@ -1,10 +1,18 @@
+import { lazy, Suspense } from 'react';
 import { createBrowserRouter } from 'react-router-dom'
 import App from '@/App.jsx'
 import Primary from '@/layouts/Primary.jsx'
-import Dashboard from '@/pages/Dashboard.jsx'
-import Contents from '@/pages/Contents.jsx'
-import NotFound from '@/pages/NotFound.jsx';
-import Customization from '@/pages/Customization.jsx';
+import LoadingIndicator from '@/components/LoadingIndicator.jsx';
+
+const lazyLoad = factory => {
+  const LazyExoticComponent = lazy(factory)
+
+  return (
+    <Suspense fallback={<LoadingIndicator />}>
+      <LazyExoticComponent/>
+    </Suspense>
+  )
+}
 
 const router = createBrowserRouter([
   {
@@ -15,19 +23,19 @@ const router = createBrowserRouter([
         children: [
           {
             index: true,
-            element: <Dashboard/>,
+            element: lazyLoad(() => import('@/pages/Dashboard.jsx')),
           },
           {
             path: '/contents',
-            element: <Contents/>,
+            element: lazyLoad(() => import('@/pages/Contents.jsx')),
           },
           {
             path: '/customization',
-            element: <Customization/>,
+            element: lazyLoad(() => import('@/pages/Customization.jsx')),
           },
           {
             path: '*',
-            element: <NotFound/>,
+            element: lazyLoad(() => import('@/pages/NotFound.jsx')),
           },
         ],
       },
