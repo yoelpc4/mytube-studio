@@ -9,7 +9,7 @@ import Link from '@mui/material/Link';
 import Avatar from '@mui/material/Avatar';
 import ListItemText from '@mui/material/ListItemText';
 import List from '@mui/material/List';
-import useContentEvent from '@/hooks/useContentEvent.jsx';
+import { useContentEvent } from '@/contexts/contentEvent.jsx';
 import { formatCount, pluralize } from '@/utils/helpers.js';
 import videographerImageUrl from '@/assets/images/videographer.svg'
 

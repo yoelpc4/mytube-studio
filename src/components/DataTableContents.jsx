@@ -8,7 +8,7 @@ import EditIcon from '@mui/icons-material/EditOutlined'
 import Box from '@mui/material/Box'
 import Typography from '@mui/material/Typography'
 import { openAlert } from '@/store/alert.js';
-import useContentEvent from '@/hooks/useContentEvent.jsx';
+import { useContentEvent } from '@/contexts/contentEvent.jsx';
 import useDataTable from '@/hooks/useDataTable.jsx'
 import { STATUS_DRAFT, STATUS_PUBLISHED } from '@/utils/constants.js'
 

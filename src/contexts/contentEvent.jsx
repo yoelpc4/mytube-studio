@@ -1,4 +1,4 @@
-import { createContext, useCallback, useReducer } from 'react';
+import { createContext, useCallback, useContext, useReducer } from 'react';
 import useSafeDispatch from '@/hooks/useSafeDispatch.jsx';
 
 const ContentEventContext = createContext(null)
@@ -76,7 +76,18 @@ function ContentEventProvider(props) {
   return <ContentEventContext.Provider value={value} {...props} />
 }
 
+function useContentEvent() {
+  const value = useContext(ContentEventContext)
+
+  if (!value) {
+    throw new Error('useContentEvent hook must be used inside ContentEventProvider component')
+  }
+
+  return value
+}
+
 export {
   ContentEventContext,
   ContentEventProvider,
+  useContentEvent,
 }

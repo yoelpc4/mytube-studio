@@ -8,7 +8,7 @@ import { openAlert } from '@/store/alert.js'
 import BootstrapDialogTitle from '@/components/BootstrapDialogTitle.jsx'
 import BootstrapDialog from '@/components/BootstrapDialog.jsx'
 import useAsync from '@/hooks/useAsync.jsx';
-import useContentEvent from '@/hooks/useContentEvent.jsx';
+import { useContentEvent } from '@/contexts/contentEvent.jsx';
 import client from '@/utils/client.js';
 
 export default function DialogCreateContent() {

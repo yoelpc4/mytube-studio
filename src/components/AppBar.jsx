@@ -11,7 +11,7 @@ import MenuOutlinedIcon from '@mui/icons-material/MenuOutlined.js'
 import VideoCallOutlinedIcon from '@mui/icons-material/VideoCallOutlined.js';
 import Button from '@mui/material/Button';
 import AvatarButtonPopover from '@/components/AvatarButtonPopover.jsx';
-import useContentEvent from '@/hooks/useContentEvent.jsx';
+import { useContentEvent } from '@/contexts/contentEvent.jsx';
 
 const StyledAppBar = styled(MuiAppBar, {
   shouldForwardProp: prop => prop !== 'open',

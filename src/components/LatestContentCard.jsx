@@ -5,7 +5,7 @@ import Card from '@mui/material/Card';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import BoxSpaceBetween from '@/components/BoxSpaceBetween.jsx';
-import useContentEvent from '@/hooks/useContentEvent.jsx';
+import { useContentEvent } from '@/contexts/contentEvent.jsx';
 import { formatCount } from '@/utils/helpers.js';
 import videographerImageUrl from '@/assets/images/videographer.svg'
 

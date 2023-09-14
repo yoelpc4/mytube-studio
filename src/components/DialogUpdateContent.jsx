@@ -13,7 +13,7 @@ import ImageField from '@/components/ImageField.jsx'
 import RadioField from '@/components/RadioField.jsx'
 import { openAlert } from '@/store/alert.js'
 import useAsync from '@/hooks/useAsync.jsx'
-import useContentEvent from '@/hooks/useContentEvent.jsx';
+import { useContentEvent } from '@/contexts/contentEvent.jsx';
 import useForm from '@/hooks/useForm.jsx'
 import client from '@/utils/client.js'
 import { STATUS_DRAFT, STATUS_PUBLISHED } from '@/utils/constants.js'
