@@ -16,13 +16,6 @@ function ContentEventProvider(props) {
 
   const safeDispatch = useSafeDispatch(dispatch)
 
-  const isEventCreate = event === 'create'
-  const isEventCreated = event === 'created'
-  const isEventUpdate = event === 'update'
-  const isEventUpdated = event === 'updated'
-  const isEventDelete = event === 'delete'
-  const isEventDeleted = event === 'deleted'
-
   const dispatchCreateContent = useCallback(() => safeDispatch({
     event: 'create',
     content: null,
@@ -58,12 +51,12 @@ function ContentEventProvider(props) {
   const value = {
     event,
     content,
-    isEventCreate,
-    isEventCreated,
-    isEventUpdate,
-    isEventUpdated,
-    isEventDelete,
-    isEventDeleted,
+    isEventCreate: event === 'create',
+    isEventCreated: event === 'created',
+    isEventUpdate: event === 'update',
+    isEventUpdated: event === 'updated',
+    isEventDelete: event === 'delete',
+    isEventDeleted: event === 'deleted',
     dispatchCreateContent,
     dispatchContentCreated,
     dispatchUpdateContent,
