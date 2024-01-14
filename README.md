@@ -1,6 +1,6 @@
 # MyTube Studio
 
-MyTube Studio (YouTube clone)
+Studio for MyTube (YouTube clone)
 
 ## Setup
 
